@@ -18,22 +18,39 @@ Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-ev
 
 ## One-Minute Install
 
-Clone this repository, then copy only the skill folder into Codex's skills directory.
+Start with an agent that supports skills, such as Codex or Claude Code.
+
+Then choose one install path:
+
+1. Use the agent's built-in skill installer if it has one. Give it this GitHub repository and ask it to install `fdu-final-paper-skill`.
+2. Or install by hand: clone this repository, then copy only `skills/fdu-final-paper-skill` into the agent's local `skills` folder.
+
+Bash/macOS/Linux:
 
 ```bash
+git clone https://github.com/XuTianle0101/fDu-Paper-Skill.git
+cd fDu-Paper-Skill
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
 cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-PowerShell:
+PowerShell/Windows:
 
 ```powershell
+git clone https://github.com/XuTianle0101/fDu-Paper-Skill.git
+cd fDu-Paper-Skill
 $target = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills" } else { "$HOME\.codex\skills" }
 New-Item -ItemType Directory -Force -Path $target | Out-Null
 Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
 ```
 
-Validate the checkout:
+Restart the agent after installing, then try a prompt like:
+
+```text
+Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
+```
+
+Optional checkout validation for maintainers:
 
 ```bash
 python scripts/quick_validate.py skills/fdu-final-paper-skill
@@ -219,3 +236,9 @@ GitHub Actions runs a scheduled check so maintainers can notice when the default
 ## License
 
 MIT for this repository's original content. See [`NOTICE`](NOTICE) for third-party material and attribution.
+
+![Hand-drawn GitHub stars](assets/github-stars.svg)
+
+## Hand-Drawn Star Growth
+
+[![Live hand-drawn GitHub star growth curve](https://starchart.cc/XuTianle0101/fDu-Paper-Skill.svg)](https://starchart.cc/XuTianle0101/fDu-Paper-Skill)

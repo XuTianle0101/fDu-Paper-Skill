@@ -10,17 +10,36 @@
 
 ## 一分钟安装
 
+先准备一个支持 skills 的 agent，例如 Codex、Claude Code 等。
+
+然后二选一安装：
+
+1. 如果 agent 自带 skill installer，直接把这个 GitHub 仓库交给它，让它安装 `fdu-final-paper-skill`。
+2. 如果想手动安装，先 `git clone` 到本地，再把 `skills/fdu-final-paper-skill` 这个文件夹复制到 agent 的本地 `skills` 文件夹。
+
+Bash/macOS/Linux：
+
 ```bash
+git clone https://github.com/XuTianle0101/fDu-Paper-Skill.git
+cd fDu-Paper-Skill
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
 cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-PowerShell:
+PowerShell/Windows：
 
 ```powershell
+git clone https://github.com/XuTianle0101/fDu-Paper-Skill.git
+cd fDu-Paper-Skill
 $target = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills" } else { "$HOME\.codex\skills" }
 New-Item -ItemType Directory -Force -Path $target | Out-Null
 Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
+```
+
+安装后重启 agent，然后可以直接这样试用：
+
+```text
+Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
 ```
 
 ## 更新已安装的 skill
@@ -162,3 +181,9 @@ python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
 ```
 
 许可证和第三方说明见 [`LICENSE`](LICENSE) 与 [`NOTICE`](NOTICE)。
+
+![GitHub 手绘 stars](assets/github-stars.svg)
+
+## 实时手绘涨星曲线
+
+[![XuTianle0101/fDu-Paper-Skill 的实时手绘 GitHub 涨星曲线](https://starchart.cc/XuTianle0101/fDu-Paper-Skill.svg)](https://starchart.cc/XuTianle0101/fDu-Paper-Skill)

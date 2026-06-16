@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="260" viewBox="0 0 920 260" role="img" aria-labelledby="title desc">
+  <title id="title">Hand-drawn GitHub stars banner</title>
+  <desc id="desc">A hand-drawn style banner asking readers to star the repository on GitHub.</desc>
+  <rect width="920" height="260" fill="#fffdf7"/>
+  <path d="M38 48 C174 28, 337 37, 466 31 C614 24, 756 30, 879 44" fill="none" stroke="#24292f" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M37 48 C31 99, 34 153, 43 211 C178 226, 333 220, 482 225 C632 231, 768 221, 878 210 C889 151, 890 94, 879 44" fill="none" stroke="#24292f" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M74 92 C161 74, 284 75, 392 82" fill="none" stroke="#d0d7de" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M507 84 C626 74, 742 77, 842 91" fill="none" stroke="#d0d7de" stroke-width="2.4" stroke-linecap="round"/>
+  <g fill="none" stroke="#24292f" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M111 148 l14 -29 l15 29 l32 5 l-23 22 l6 32 l-30 -16 l-29 16 l6 -32 l-24 -22 z" stroke-width="4.6"/>
+    <path d="M125 119 c-2 13 -5 24 -14 29" stroke-width="2.2" opacity=".55"/>
+    <path d="M433 127 l10 -22 l11 22 l24 4 l-18 17 l5 24 l-22 -12 l-22 12 l5 -24 l-18 -17 z" stroke-width="3.4"/>
+    <path d="M775 135 l12 -24 l12 24 l27 4 l-19 19 l4 27 l-24 -13 l-24 13 l5 -27 l-20 -19 z" stroke-width="3.8"/>
+  </g>
+  <g fill="#f6c343" stroke="#24292f" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M246 121 l17 -34 l17 34 l38 6 l-27 27 l6 38 l-34 -18 l-34 18 l7 -38 l-28 -27 z" stroke-width="4.2"/>
+    <path d="M628 126 l15 -31 l16 31 l34 5 l-25 24 l6 34 l-31 -16 l-30 16 l6 -34 l-25 -24 z" stroke-width="4.2"/>
+  </g>
+  <g fill="#24292f" font-family="Comic Sans MS, Bradley Hand, Segoe Print, cursive" text-anchor="middle">
+    <text x="460" y="102" font-size="34">If this skill helped, star it on GitHub</text>
+    <text x="460" y="152" font-size="25" fill="#57606a">small stars make open-source tools easier to find</text>
+  </g>
+  <path d="M330 188 C386 211, 520 214, 589 187" fill="none" stroke="#0969da" stroke-width="4" stroke-linecap="round"/>
+  <path d="M586 187 l-23 -5 m23 5 l-12 20" fill="none" stroke="#0969da" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="84" cy="76" r="4" fill="#0969da"/>
+  <circle cx="835" cy="194" r="4" fill="#0969da"/>
+  <circle cx="707" cy="62" r="3" fill="#cf222e"/>
+</svg>
