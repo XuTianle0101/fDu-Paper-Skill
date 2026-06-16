@@ -38,6 +38,25 @@ python scripts/quick_validate.py skills/fdu-final-paper-skill
 python scripts/smoke_test.py
 ```
 
+## Reading Reference Files Safely
+
+The installed skill includes a reader for Chinese/English PDFs, DOCX files, and text-like references:
+
+```bash
+python skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/reference.pdf" \
+  -o extracted-reference.md
+```
+
+If a Chinese path is garbled by the shell, pass it through an environment variable instead:
+
+```powershell
+$env:FDU_REF_FILE = "D:\论文资料\参考文献\中文论文.docx"
+python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FDU_REF_FILE `
+  -o extracted-reference.md
+```
+
+Use `--pages 1-5` for long PDFs, `--max-chars 0` for full extraction, and `--list-env` for multiple files.
+
 ## Three-Minute Demo
 
 Try these prompts after installing the skill:

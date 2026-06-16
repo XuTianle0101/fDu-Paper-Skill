@@ -21,6 +21,25 @@ New-Item -ItemType Directory -Force -Path $target | Out-Null
 Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
 ```
 
+## 稳定读取参考文件
+
+已安装的 skill 内置了读取脚本，可先把中文/英文 PDF、DOCX 和常见文本参考资料抽取为 UTF-8 Markdown，再交给 agent 分析：
+
+```bash
+python skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/reference.pdf" \
+  -o extracted-reference.md
+```
+
+如果中文路径在 shell 中乱码或转义失败，用环境变量传路径：
+
+```powershell
+$env:FDU_REF_FILE = "D:\论文资料\参考文献\中文论文.docx"
+python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FDU_REF_FILE `
+  -o extracted-reference.md
+```
+
+长 PDF 可加 `--pages 1-5`，完整抽取可用 `--max-chars 0`，多个文件可用 `--list-env`。
+
 ## 三分钟试用
 
 ```text

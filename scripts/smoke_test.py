@@ -4,8 +4,11 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
+import tempfile
+import zipfile
 from pathlib import Path
 
 
@@ -30,6 +33,7 @@ def main() -> int:
     require(SKILL_DIR / "SKILL.md")
     require(SKILL_DIR / "references" / "fudan-2026-format-checklist.md")
     require(SKILL_DIR / "scripts" / "check_fudan_spec_update.py")
+    require(SKILL_DIR / "scripts" / "read_reference_file.py")
 
     if (ROOT / "embedded" / "claude-office-docx-skill").exists():
         raise SystemExit("Unlicensed DOCX vendoring must not be restored.")
@@ -59,6 +63,63 @@ def main() -> int:
             "--offline",
         ]
     )
+
+    with tempfile.TemporaryDirectory(prefix="fdu-skill-") as tmpdir:
+        sample = Path(tmpdir) / "中文参考.txt"
+        sample.write_text("复旦论文参考文件\nEnglish reference text", encoding="utf-8")
+        env = os.environ.copy()
+        env["FDU_REFERENCE_PATH"] = str(sample)
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(SKILL_DIR / "scripts" / "read_reference_file.py"),
+                "--path-env",
+                "FDU_REFERENCE_PATH",
+                "--max-chars",
+                "500",
+            ],
+            cwd=ROOT,
+            env=env,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+        )
+        if "复旦论文参考文件" not in completed.stdout:
+            raise SystemExit("Reference reader failed to preserve Chinese text.")
+
+        docx_sample = Path(tmpdir) / "英文与中文.docx"
+        document_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:r><w:t>DOCX中文内容</w:t></w:r></w:p>
+    <w:p><w:r><w:t>English DOCX content</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_sample, "w") as docx:
+            docx.writestr("word/document.xml", document_xml)
+        env["FDU_DOCX_PATH"] = str(docx_sample)
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(SKILL_DIR / "scripts" / "read_reference_file.py"),
+                "--path-env",
+                "FDU_DOCX_PATH",
+                "--max-chars",
+                "500",
+            ],
+            cwd=ROOT,
+            env=env,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+        )
+        if "DOCX中文内容" not in completed.stdout:
+            raise SystemExit("Reference reader failed to extract DOCX text.")
 
     print("Smoke tests passed!")
     return 0

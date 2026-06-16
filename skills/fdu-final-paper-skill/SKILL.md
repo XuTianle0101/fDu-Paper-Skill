@@ -37,6 +37,28 @@ This repository keeps optional implementation helpers outside the core skill so 
   - Use the active document/DOCX capability already available in the current Codex environment when the user needs to create, inspect, edit, comment on, or redline `.docx` thesis files.
   - If no DOCX skill or document plugin is available, produce a Markdown or LaTeX revision package and tell the user which DOCX-capable skill/plugin should be installed or enabled. Do not assume a vendored DOCX module exists in this repository.
 
+## Reading User-Supplied Reference Files
+
+Before analyzing user-provided reference files, prefer the bundled reader for `.pdf`, `.docx`, `.txt`, `.md`, `.tex`, `.bib`, and other text-like files:
+
+```bash
+python scripts/read_reference_file.py "path/to/reference.pdf" --max-chars 80000
+```
+
+When a path contains Chinese characters, spaces, or shell escaping fails, do not spend time retrying ad hoc commands. Pass the path through an environment variable and rerun:
+
+```powershell
+$env:FDU_REF_FILE = "D:\论文资料\参考文献\中文论文.docx"
+python scripts/read_reference_file.py --path-env FDU_REF_FILE -o extracted-reference.md
+```
+
+```bash
+export FDU_REF_FILE="/path/to/论文资料/reference.pdf"
+python scripts/read_reference_file.py --path-env FDU_REF_FILE -o extracted-reference.md
+```
+
+Use `--pages 1-5` for long PDFs, `--max-chars 0` when full extraction is needed, and `--list-env` when the user supplies multiple files through one environment variable. If PDF extraction reports that no backend succeeded, treat the file as likely scanned or image-only and switch to an OCR-capable PDF workflow. If the input is legacy `.doc`, ask for or create a `.docx` conversion before relying on text extraction.
+
 ## Default Workflow
 
 1. Identify the task: outline planning, section drafting, revision, compliance check, LaTeX project work, Word editing, or defense-readiness audit.
