@@ -1,0 +1,21 @@
+fdu-final-paper-skill
+=====================
+
+This repository is distributed under the MIT License unless otherwise noted.
+
+Third-party material
+--------------------
+
+- `embedded/latex-paper-skills/` is retained as an optional helper bundle from
+  `yunshenwuchuxun/latex-paper-skills`. Its upstream license is MIT and the
+  embedded folder keeps its original `LICENSE` file.
+- The previously vendored DOCX workflow from `tfriedel/claude-office-skills`
+  has been removed from this repository because redistribution rights were not
+  clear. Use an installed document/DOCX skill, the Codex Documents plugin, or
+  another appropriately licensed workflow for `.docx` editing.
+- The Fudan University thesis specification URLs and titles are factual
+  references to public Graduate School pages. The official pages remain the
+  final authority for formatting and submission requirements.
+
+No endorsement by Fudan University, OpenAI, Anthropic, or any third-party
+project is implied.

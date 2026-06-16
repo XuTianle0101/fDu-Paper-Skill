@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated thesis outputs
+outputs/
+dist/
+build/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+# Local documents used for testing
+*.docx
+*.pdf
+!examples/**/*.pdf
+!assets/**/*.svg
+
+# Local environment files
+.env
+.env.*

@@ -1,0 +1,5 @@
+interface:
+  display_name: "复旦学位论文写作"
+  short_description: "规划、撰写、修订和合规检查复旦研究生学位论文的通用 skill。"
+  default_prompt: "Use $fdu-final-paper-skill to plan and audit a Fudan graduate thesis."
+

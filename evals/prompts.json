@@ -1,0 +1,62 @@
+[
+  {
+    "id": "outline-master-remote-sensing",
+    "task_type": "chapter_plan",
+    "prompt": "Use $fdu-final-paper-skill to design a Fudan master's thesis outline for: 基于多源遥感数据的城市热岛效应时空演化研究. Degree: academic master's. Evidence: Landsat, MODIS LST, POI density, land cover. Submission batch: 2026-09.",
+    "expected_checks": ["chapter tree", "evidence type per chapter", "Fudan 2026 notes", "missing inputs"]
+  },
+  {
+    "id": "outline-doctoral-three-studies",
+    "task_type": "chapter_plan",
+    "prompt": "Use $fdu-final-paper-skill to plan a doctoral dissertation with three connected studies on AI-assisted medical image quality control. Evidence includes algorithm benchmark results, hospital workflow interviews, and external validation.",
+    "expected_checks": ["doctoral architecture", "cross-study synthesis", "claim boundaries", "ethics or approval unknowns"]
+  },
+  {
+    "id": "abstract-chinese-revision",
+    "task_type": "abstract_revision",
+    "prompt": "Use $fdu-final-paper-skill to revise my Chinese abstract. It currently says the method is '显著优于现有方法' but I only have two ablation tables and no external baseline. Mark claim-evidence risks.",
+    "expected_checks": ["revised abstract", "unsupported claim warning", "weakened contribution language", "missing evidence list"]
+  },
+  {
+    "id": "english-abstract-alignment",
+    "task_type": "abstract_revision",
+    "prompt": "Use $fdu-final-paper-skill to compare my Chinese and English abstracts for structural equivalence and term consistency. The thesis is about public health policy evaluation.",
+    "expected_checks": ["parallel structure", "terminology mapping", "numbers consistency", "revision suggestions"]
+  },
+  {
+    "id": "intro-funnel",
+    "task_type": "introduction_revision",
+    "prompt": "Use $fdu-final-paper-skill to rewrite the introduction logic. My current introduction lists 25 papers one by one and never states a research gap.",
+    "expected_checks": ["funnel structure", "literature clusters", "gap statements", "chapter objective map"]
+  },
+  {
+    "id": "conclusion-overclaim",
+    "task_type": "conclusion_revision",
+    "prompt": "Use $fdu-final-paper-skill to revise my conclusion. It claims nationwide policy value, but my data only covers one district and one year.",
+    "expected_checks": ["bounded conclusion", "specific limitations", "future work tied to limits", "no new evidence"]
+  },
+  {
+    "id": "claim-evidence-table",
+    "task_type": "claim_evidence_audit",
+    "prompt": "Use $fdu-final-paper-skill to build a claim-evidence table for my thesis contributions. I have three claimed innovations, two figures, one survey, and a reference list.",
+    "expected_checks": ["claim table", "evidence status", "revision action", "pending evidence markers"]
+  },
+  {
+    "id": "fudan-2026-frontmatter",
+    "task_type": "format_compliance",
+    "prompt": "Use $fdu-final-paper-skill to audit my front matter for the Fudan 2026.06 thesis specification. Submission batch: 2026-09. I am an international student and my passport name differs from my Chinese name.",
+    "expected_checks": ["official-rule reminder", "passport-name check", "cover/title page fields", "department confirmation questions"]
+  },
+  {
+    "id": "references-gbt-transition",
+    "task_type": "reference_check",
+    "prompt": "Use $fdu-final-paper-skill to check whether my references and citations are submission-ready. I submit after 2026-07-01 and use BibTeX.",
+    "expected_checks": ["GB/T 7714 transition warning", "citation-bibliography consistency", "BibTeX cleanup actions", "unknowns"]
+  },
+  {
+    "id": "defense-readiness",
+    "task_type": "defense_audit",
+    "prompt": "Use $fdu-final-paper-skill to do a defense-readiness audit. I need likely committee questions, weak claims, missing evidence, and a final two-week revision plan.",
+    "expected_checks": ["committee questions", "weak claim list", "evidence gaps", "revision plan"]
+  }
+]

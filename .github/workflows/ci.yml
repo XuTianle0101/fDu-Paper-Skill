@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * 1"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate skill
+        run: python scripts/quick_validate.py skills/fdu-final-paper-skill
+
+      - name: Check Markdown links
+        run: python scripts/check_markdown_links.py --root .
+
+      - name: Run smoke tests
+        run: python scripts/smoke_test.py
+
+      - name: Check Fudan spec snapshot offline
+        run: |
+          python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
+            --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md \
+            --offline
+
+      - name: Watch official Fudan spec page
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
+            --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md \
+            --fail-on-change
