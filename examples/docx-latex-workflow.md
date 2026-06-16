@@ -20,7 +20,9 @@ Goal: produce tracked Word revision notes and a clean LaTeX/PDF validation check
 4. Edit DOCX with tracked changes only if a DOCX-capable skill/plugin is installed.
    - If not installed, generate a Markdown revision memo with paragraph-level replacement text.
 5. Run LaTeX checks.
-   - Compile the project if a TeX toolchain is available.
+   - Prefer `python scripts/compile_latex_project.py --project-dir . --main thesis.tex --engine auto` when the Fudan skill scripts are available.
+   - If using `--output-dir build`, verify that `\include` aux subdirectories are prepared and that the PDF is checked at the actual output path.
+   - For `fduthesis`/`unicode-math`, remove duplicate legacy math packages such as `amssymb` or `amsfonts` before retrying compilation.
    - Check citation keys in `thesis.tex` against `ref.bib`.
    - Confirm figure/table numbering after compilation.
 6. Produce final reports.
