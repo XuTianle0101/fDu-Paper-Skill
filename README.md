@@ -1,5 +1,7 @@
 # Fudan Graduate Thesis Skill
 
+Current skill version: `v0.1.0`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
+
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
 `fdu-final-paper-skill` is a Codex skill for Fudan master's and doctoral theses. It helps an agent turn messy thesis material into a defensible chapter plan, revise Chinese/English academic prose, check claim-evidence alignment, and audit the thesis against Fudan's 2026.06 thesis specification.
@@ -37,6 +39,46 @@ Validate the checkout:
 python scripts/quick_validate.py skills/fdu-final-paper-skill
 python scripts/smoke_test.py
 ```
+
+## Updating an Installed Skill
+
+Installed Codex skills are copied into the local skills directory, so users who installed an earlier version should update their repository checkout and reinstall the skill folder.
+
+```bash
+git pull
+
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/fdu-final-paper-skill"
+cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+PowerShell:
+
+```powershell
+git pull
+
+$skills = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills" } else { "$HOME\.codex\skills" }
+$dest = Join-Path $skills "fdu-final-paper-skill"
+
+Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $skills
+```
+
+Restart Codex after reinstalling so the updated skill is loaded.
+
+If the repository was installed from GitHub and you already have a local checkout:
+
+```bash
+cd path/to/fdu-final-paper-skill
+git pull
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/fdu-final-paper-skill"
+cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+## Release Notifications
+
+Important changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Maintainers should publish GitHub tags and Releases for user-facing updates, for example `v0.1.0`, `v0.1.1`, and `v0.2.0`.
+
+Users who want update notifications can open the GitHub repository, choose **Watch -> Custom -> Releases**, and GitHub will notify them when a new release is published.
 
 ## Reading Reference Files Safely
 

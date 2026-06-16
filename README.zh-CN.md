@@ -1,5 +1,7 @@
 # 复旦研究生学位论文写作 Skill
 
+当前 skill 版本：`v0.1.0`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
+
 上传论文 -> 得到合规报告。给出选题 -> 得到章节规划。贴入草稿 -> 得到 claim-evidence 审查。
 
 这是一个面向复旦大学硕士、博士学位论文的 Codex skill，用于目录规划、摘要/绪论/结论修改、证据链检查、答辩前自查、LaTeX/BibTeX 工作流和复旦 2026.06 版论文规范合规检查。
@@ -20,6 +22,46 @@ $target = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills" } else { "$HOME\.codex
 New-Item -ItemType Directory -Force -Path $target | Out-Null
 Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
 ```
+
+## 更新已安装的 skill
+
+Codex skill 安装后会被复制到本地 skills 目录。已经安装过早期版本的用户，需要先更新仓库，再覆盖本地已安装的 skill 文件夹。
+
+```bash
+git pull
+
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/fdu-final-paper-skill"
+cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+PowerShell:
+
+```powershell
+git pull
+
+$skills = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills" } else { "$HOME\.codex\skills" }
+$dest = Join-Path $skills "fdu-final-paper-skill"
+
+Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $skills
+```
+
+重新安装后请重启 Codex，让新版 skill 生效。
+
+如果用户是从 GitHub 安装并已经有本地仓库副本，可以使用：
+
+```bash
+cd path/to/fdu-final-paper-skill
+git pull
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/fdu-final-paper-skill"
+cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+## 发布与更新通知
+
+重要更新会记录在 [`CHANGELOG.md`](CHANGELOG.md)。维护者发布面向用户的更新时，建议同步创建 GitHub tag 和 Release，例如 `v0.1.0`、`v0.1.1`、`v0.2.0`。
+
+用户如果希望收到更新通知，可以在 GitHub 仓库页面选择 **Watch -> Custom -> Releases**，之后每次发布新 release 时会收到 GitHub 通知。
 
 ## 稳定读取参考文件
 
