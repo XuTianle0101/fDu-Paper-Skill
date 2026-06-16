@@ -4,7 +4,7 @@ Current skill version: `v0.1.0`. See [`CHANGELOG.md`](CHANGELOG.md) for release 
 
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
-`fdu-final-paper-skill` is a Codex skill for Fudan master's and doctoral theses. It helps an agent turn messy thesis material into a defensible chapter plan, revise Chinese/English academic prose, check claim-evidence alignment, and audit the thesis against Fudan's 2026.06 thesis specification.
+`fdu-final-paper-skill` is a Codex skill for Fudan master's and doctoral theses. It helps an agent turn messy thesis material into a defensible chapter plan, revise Chinese/English academic prose, check claim-evidence alignment, and audit the thesis against Fudan's 2026.06 thesis specification by default, while allowing newer or department-specific compliance links, files, folders, and templates to override or supplement that baseline.
 
 ![Compliance report screenshot](assets/product-screenshot.svg)
 
@@ -12,8 +12,8 @@ Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-ev
 
 - **Topic -> chapter plan**: turn a research topic, methods, data, and degree type into a chapter tree with evidence requirements.
 - **Draft -> claim-evidence audit**: catch inflated contribution claims, unsupported conclusions, inconsistent terminology, and missing figure/table interpretation.
-- **Upload thesis -> compliance report**: check front matter, abstracts, figure/table lists, references, notes, conclusions, appendices, and defense-readiness risks.
-- **LaTeX/BibTeX ready**: reuse the optional LaTeX helper bundle for compilation, citation checks, and issue-gated writing.
+- **Upload thesis -> compliance report**: check front matter, abstracts, figure/table lists, references, notes, conclusions, appendices, and defense-readiness risks against the default Fudan 2026.06 baseline or user-supplied compliance sources.
+- **LaTeX/BibTeX ready**: run Fudan-friendly compile diagnostics for `fduthesis`, output directories, and PDF artifact verification; reuse the optional LaTeX helper bundle for broader paper workflows.
 - **DOCX friendly without vendoring risk**: use your installed document/DOCX plugin or skill for Word editing; this repository does not redistribute unclear-license DOCX code.
 
 ## One-Minute Install
@@ -99,6 +99,49 @@ python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FD
 
 Use `--pages 1-5` for long PDFs, `--max-chars 0` for full extraction, and `--list-env` for multiple files.
 
+## Custom Compliance Sources
+
+Fudan 2026.06 remains the default compliance and template reference. You can also give the skill newer Graduate School links, department notices, supervisor instructions, template files, or a folder of rule documents. The agent should read those sources, state which ones were used, and use Fudan 2026.06 only as the default baseline or fallback for missing items.
+
+Example prompt:
+
+```text
+Use $fdu-final-paper-skill to audit my thesis.
+Default baseline: Fudan 2026.06.
+Additional compliance sources:
+- Department notice: docs/department-2026-defense-rules.pdf
+- Template folder: templates/fudan-school-template/
+- Official link: https://example.edu/department/thesis-rules
+```
+
+For local rule folders, extract the source set first when needed:
+
+```bash
+python skills/fdu-final-paper-skill/scripts/read_reference_file.py \
+  --glob "docs/compliance/**/*.pdf" \
+  --glob "docs/compliance/**/*.docx" \
+  --glob "docs/compliance/**/*.md" \
+  -o extracted-compliance-sources.md
+```
+
+## Smoother LaTeX Compilation
+
+For `fduthesis` projects, start with the bundled compiler helper instead of hand-rolling wrapper logic:
+
+```bash
+python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
+  --project-dir path/to/thesis --main main.tex --engine auto
+```
+
+If the project uses a build directory:
+
+```bash
+python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
+  --project-dir path/to/thesis --main main.tex --engine auto --output-dir build
+```
+
+The helper flags common `fduthesis`/`unicode-math` conflicts such as `amssymb`, prepares `\include` aux subdirectories under the output directory, and verifies the actual fresh PDF path before reporting success or failure.
+
 ## Three-Minute Demo
 
 Try these prompts after installing the skill:
@@ -157,20 +200,21 @@ More examples:
 ├── evals/                              # 10 realistic eval prompts
 ├── scripts/                            # repo validation helpers
 ├── embedded/latex-paper-skills/        # optional MIT-licensed LaTeX helper bundle
+├── skills/.../references/              # default Fudan checklist and source policy
 ├── assets/                             # README screenshot and demo cast
 └── .github/workflows/ci.yml            # validation and Fudan spec watch
 ```
 
 ## Fudan Specification Watch
 
-The skill includes a snapshot of the current Fudan Graduate School thesis-spec page and a checker:
+The skill includes a snapshot of the default Fudan Graduate School thesis-spec page and a checker:
 
 ```bash
 python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
   --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md
 ```
 
-GitHub Actions runs a scheduled check so maintainers can notice when the official page changes.
+GitHub Actions runs a scheduled check so maintainers can notice when the default official page changes. Custom department links or user-supplied files are evaluated during the user's audit task, not by the scheduled watcher.
 
 ## License
 

@@ -8,17 +8,24 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 
 ### Added
 
+- Added `scripts/compile_latex_project.py` for Fudan-friendly LaTeX compilation diagnostics.
+- Added `references/latex-compile-debugging.md` with guidance for `fduthesis`, `unicode-math`, output directories, `\include` aux files, and wrapper/PDF artifact checks.
+- Added smoke-test coverage for `fduthesis` plus `amssymb` preflight detection and verified-PDF handling when a wrapper returns a nonzero code.
+- Added README instructions for the new LaTeX compile helper in English and Chinese.
 - Added README instructions for updating an already installed Codex skill.
 - Added release notification guidance using GitHub Releases and **Watch -> Custom -> Releases**.
 - Added this changelog as the canonical place for future release notes.
+- Added a custom compliance source workflow: Fudan 2026.06 remains the default baseline, while newer or department-specific links, files, folders, and templates can override or supplement compliance checks.
 
 ### Fixed
 
-- No code fixes in this documentation-only update.
+- Avoid repeated advice to add legacy math symbol packages when `fduthesis` or `unicode-math` already owns math symbol setup.
+- Avoid false compile failures when the PDF is freshly generated in the configured output directory but a wrapper script expects it beside the root `.tex` file.
+- Prepare output subdirectories needed by `\include{...}` aux writes when using a build directory.
 
 ### Reinstall Required
 
-- Yes. Users who want the new README-distributed instructions in their installed skill should reinstall by replacing the local `fdu-final-paper-skill` folder.
+- Yes. Users who want the new LaTeX compile helper, debugging reference, and updated skill routing should reinstall by replacing the local `fdu-final-paper-skill` folder.
 
 ### Recommended Update
 

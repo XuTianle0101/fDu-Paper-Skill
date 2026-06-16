@@ -29,10 +29,14 @@ def main() -> int:
     require(ROOT / "LICENSE")
     require(ROOT / "NOTICE")
     require(ROOT / "CONTRIBUTING.md")
+    require(ROOT / "CHANGELOG.md")
     require(ROOT / ".gitignore")
     require(SKILL_DIR / "SKILL.md")
+    require(SKILL_DIR / "references" / "compliance-source-policy.md")
     require(SKILL_DIR / "references" / "fudan-2026-format-checklist.md")
+    require(SKILL_DIR / "references" / "latex-compile-debugging.md")
     require(SKILL_DIR / "scripts" / "check_fudan_spec_update.py")
+    require(SKILL_DIR / "scripts" / "compile_latex_project.py")
     require(SKILL_DIR / "scripts" / "read_reference_file.py")
 
     if (ROOT / "embedded" / "claude-office-docx-skill").exists():
@@ -120,6 +124,122 @@ def main() -> int:
         )
         if "DOCX中文内容" not in completed.stdout:
             raise SystemExit("Reference reader failed to extract DOCX text.")
+
+    with tempfile.TemporaryDirectory(prefix="fdu-latex-") as tmpdir:
+        project = Path(tmpdir) / "thesis"
+        project.mkdir()
+        (project / "chapters").mkdir()
+        (project / "main.tex").write_text(
+            r"""\documentclass{fduthesis}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\begin{document}
+\include{chapters/intro}
+\end{document}
+""",
+            encoding="utf-8",
+        )
+        (project / "chapters" / "intro.tex").write_text("正文", encoding="utf-8")
+
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(SKILL_DIR / "scripts" / "compile_latex_project.py"),
+                "--project-dir",
+                str(project),
+                "--main",
+                "main.tex",
+                "--preflight-only",
+            ],
+            cwd=ROOT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+        )
+        if completed.returncode != 2 or "amssymb" not in completed.stdout:
+            raise SystemExit("LaTeX preflight did not flag fduthesis/amssymb conflict.")
+
+        fake_bin = Path(tmpdir) / "fake-bin"
+        fake_bin.mkdir()
+        fake_latexmk = fake_bin / "fake_latexmk.py"
+        fake_latexmk.write_text(
+            """
+from pathlib import Path
+import sys
+
+outdir = "."
+main = "main.tex"
+for arg in sys.argv[1:]:
+    if arg.startswith("-outdir="):
+        outdir = arg.split("=", 1)[1]
+    elif arg.endswith(".tex"):
+        main = arg
+
+out = Path(outdir)
+out.mkdir(parents=True, exist_ok=True)
+if not (out / "chapters").is_dir():
+    print("I can't write on file 'chapters/intro.aux'.", file=sys.stderr)
+    raise SystemExit(1)
+
+stem = Path(main).stem
+(out / f"{stem}.pdf").write_bytes(b"%PDF-1.4\\n% fake\\n")
+(out / f"{stem}.log").write_text(
+    f"Output written on {outdir}/{stem}.pdf (1 page, 12 bytes).\\n",
+    encoding="utf-8",
+)
+raise SystemExit(12)
+""".lstrip(),
+            encoding="utf-8",
+        )
+        if os.name == "nt":
+            launcher = fake_bin / "latexmk.cmd"
+            launcher.write_text(f'@echo off\n"{sys.executable}" "%~dp0fake_latexmk.py" %*\n', encoding="utf-8")
+        else:
+            launcher = fake_bin / "latexmk"
+            launcher.write_text(
+                f"#!{sys.executable}\n"
+                "from pathlib import Path\n"
+                "import runpy\n"
+                "runpy.run_path(str(Path(__file__).with_name('fake_latexmk.py')), run_name='__main__')\n",
+                encoding="utf-8",
+            )
+            launcher.chmod(0o755)
+
+        tex_text = (project / "main.tex").read_text(encoding="utf-8")
+        tex_text = tex_text.replace("\\usepackage{amssymb}\n", "")
+        (project / "main.tex").write_text(tex_text, encoding="utf-8")
+
+        env = os.environ.copy()
+        env["PATH"] = str(fake_bin) + os.pathsep + env.get("PATH", "")
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(SKILL_DIR / "scripts" / "compile_latex_project.py"),
+                "--project-dir",
+                str(project),
+                "--main",
+                "main.tex",
+                "--engine",
+                "xelatex",
+                "--output-dir",
+                "build",
+            ],
+            cwd=ROOT,
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+        )
+        if completed.returncode != 0:
+            raise SystemExit(
+                "LaTeX helper treated a verified fresh PDF as failure.\n"
+                + completed.stdout
+                + completed.stderr
+            )
+        if "PDF: build" not in completed.stdout or "compiler returned 12" not in completed.stderr:
+            raise SystemExit("LaTeX helper did not report verified build PDF with wrapper warning.")
 
     print("Smoke tests passed!")
     return 0
