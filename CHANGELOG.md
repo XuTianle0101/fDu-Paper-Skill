@@ -6,6 +6,10 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 
 ## Unreleased
 
+- No unreleased changes.
+
+## v0.1.1 - 2026-06-16
+
 ### Added
 
 - Added `scripts/compile_latex_project.py` for Fudan-friendly LaTeX compilation diagnostics.

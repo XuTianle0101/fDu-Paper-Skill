@@ -1,6 +1,6 @@
 # 复旦研究生学位论文写作 Skill
 
-当前 skill 版本：`v0.1.0`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
+当前 skill 版本：`v0.1.1`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
 
 上传论文 -> 得到合规报告。给出选题 -> 得到章节规划。贴入草稿 -> 得到 claim-evidence 审查。
 

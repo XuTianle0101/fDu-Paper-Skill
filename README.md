@@ -1,6 +1,6 @@
 # Fudan Graduate Thesis Skill
 
-Current skill version: `v0.1.0`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
+Current skill version: `v0.1.1`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
 
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
