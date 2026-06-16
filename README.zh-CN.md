@@ -184,6 +184,12 @@ python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
 
 ![GitHub 手绘 stars](assets/github-stars.svg)
 
-## 实时手绘涨星曲线
+## Star History
 
-[![XuTianle0101/fDu-Paper-Skill 的实时手绘 GitHub 涨星曲线](https://starchart.cc/XuTianle0101/fDu-Paper-Skill.svg)](https://starchart.cc/XuTianle0101/fDu-Paper-Skill)
+<a href="https://www.star-history.com/#XuTianle0101/fDu-Paper-Skill&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
+  </picture>
+</a>

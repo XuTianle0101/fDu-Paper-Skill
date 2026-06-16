@@ -239,6 +239,12 @@ MIT for this repository's original content. See [`NOTICE`](NOTICE) for third-par
 
 ![Hand-drawn GitHub stars](assets/github-stars.svg)
 
-## Hand-Drawn Star Growth
+## Star History
 
-[![Live hand-drawn GitHub star growth curve](https://starchart.cc/XuTianle0101/fDu-Paper-Skill.svg)](https://starchart.cc/XuTianle0101/fDu-Paper-Skill)
+<a href="https://www.star-history.com/#XuTianle0101/fDu-Paper-Skill&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
+  </picture>
+</a>
