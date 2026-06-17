@@ -162,7 +162,7 @@ def ensure_output_dirs(project_dir: Path, output_dir: str | None, includes: list
         created.append(target)
 
     if created:
-        rel = [str(path.relative_to(project_dir)) if path.is_relative_to(project_dir) else str(path) for path in created]
+        rel = [relative_or_absolute(path, project_dir) for path in created]
         print("Prepared output subdirectories for \\include aux files: " + ", ".join(sorted(set(rel))))
     return out_dir
 

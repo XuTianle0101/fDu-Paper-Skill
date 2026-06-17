@@ -10,6 +10,10 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.11"]
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -17,7 +21,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ matrix.python-version }}
 
       - name: Validate skill
         run: python scripts/quick_validate.py skills/fdu-final-paper-skill
@@ -35,7 +39,7 @@ jobs:
             --offline
 
       - name: Watch official Fudan spec page
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.python-version == '3.11'
         run: |
           python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
             --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md \

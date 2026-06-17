@@ -6,7 +6,13 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 
 ## Unreleased
 
-- No unreleased changes.
+### Fixed
+
+- Fixed `compile_latex_project.py` on Python 3.8 by avoiding `Path.is_relative_to()`.
+
+### Changed
+
+- CI now runs validation and smoke tests on Python 3.8 and 3.11.
 
 ## v0.1.1 - 2026-06-16
 
