@@ -12,6 +12,7 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 - Fixed `quick_validate.py` so folded YAML descriptions such as `description: >` are parsed as full trigger text instead of the literal `>`.
 - Added smoke-test coverage for PDF extraction through the `pdftotext` fallback backend.
 - Replaced the embedded `latex-paper-skills` README files with snapshot manifests that do not link to omitted upstream assets.
+- Added golden eval sketches and a rubric checker so eval prompts test source declarations, missing information, claim-evidence risks, and compliance unknowns.
 
 ### Changed
 

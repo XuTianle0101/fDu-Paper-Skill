@@ -56,6 +56,7 @@ def main() -> int:
         missing = required_prompt_keys - set(item)
         if missing:
             raise SystemExit(f"Eval prompt {item.get('id', '<missing id>')} missing {sorted(missing)}")
+    run([sys.executable, "scripts/check_eval_outputs.py"])
 
     run([sys.executable, "scripts/quick_validate.py", str(SKILL_DIR)])
     validator_spec = importlib.util.spec_from_file_location(
