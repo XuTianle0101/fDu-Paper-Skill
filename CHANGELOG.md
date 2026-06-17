@@ -11,11 +11,13 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 - Fixed `compile_latex_project.py` on Python 3.8 by avoiding `Path.is_relative_to()`.
 - Fixed `quick_validate.py` so folded YAML descriptions such as `description: >` are parsed as full trigger text instead of the literal `>`.
 - Added smoke-test coverage for PDF extraction through the `pdftotext` fallback backend.
+- Replaced the embedded `latex-paper-skills` README files with snapshot manifests that do not link to omitted upstream assets.
 
 ### Changed
 
 - `quick_validate.py` now checks description length, trigger keyword coverage, and `agents/openai.yaml` interface freshness.
 - Documented optional PDF extraction backends: `pypdf`/`PyPDF2`, `pdfplumber`, `PyMuPDF`, or Poppler `pdftotext`.
+- Markdown link checking now includes `embedded/` and local HTML image/source resources.
 - CI now runs validation and smoke tests on Python 3.8 and 3.11.
 
 ## v0.1.1 - 2026-06-16

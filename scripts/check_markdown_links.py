@@ -11,6 +11,10 @@ from urllib.parse import unquote
 
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+HTML_RESOURCE_RE = re.compile(
+    r"""<(?:img|source)\b[^>]*\b(?:src|srcset)=["']([^"']+)["']""",
+    re.IGNORECASE,
+)
 SKIP_PREFIXES = (
     "http://",
     "https://",
@@ -22,7 +26,7 @@ SKIP_PREFIXES = (
 
 
 def iter_markdown_files(root: Path) -> list[Path]:
-    ignored = {".git", ".venv", "node_modules", "__pycache__", "embedded"}
+    ignored = {".git", ".venv", "node_modules", "__pycache__"}
     files: list[Path] = []
     for path in root.rglob("*.md"):
         if any(part in ignored for part in path.parts):
@@ -57,6 +61,16 @@ def check_file(path: Path, root: Path) -> list[str]:
             if not resolved.exists():
                 rel = path.relative_to(root)
                 errors.append(f"{rel}:{lineno}: missing local link target: {target}")
+        for match in HTML_RESOURCE_RE.finditer(line):
+            target = clean_target(match.group(1))
+            if not target or target.startswith(SKIP_PREFIXES):
+                continue
+            if re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", target):
+                continue
+            resolved = (path.parent / target).resolve()
+            if not resolved.exists():
+                rel = path.relative_to(root)
+                errors.append(f"{rel}:{lineno}: missing local HTML resource target: {target}")
     return errors
 
 
