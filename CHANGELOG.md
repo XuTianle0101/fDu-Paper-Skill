@@ -9,9 +9,11 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 ### Fixed
 
 - Fixed `compile_latex_project.py` on Python 3.8 by avoiding `Path.is_relative_to()`.
+- Fixed `quick_validate.py` so folded YAML descriptions such as `description: >` are parsed as full trigger text instead of the literal `>`.
 
 ### Changed
 
+- `quick_validate.py` now checks description length, trigger keyword coverage, and `agents/openai.yaml` interface freshness.
 - CI now runs validation and smoke tests on Python 3.8 and 3.11.
 
 ## v0.1.1 - 2026-06-16

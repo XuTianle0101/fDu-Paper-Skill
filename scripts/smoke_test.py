@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
 import subprocess
@@ -57,6 +58,22 @@ def main() -> int:
             raise SystemExit(f"Eval prompt {item.get('id', '<missing id>')} missing {sorted(missing)}")
 
     run([sys.executable, "scripts/quick_validate.py", str(SKILL_DIR)])
+    validator_spec = importlib.util.spec_from_file_location(
+        "quick_validate", ROOT / "scripts" / "quick_validate.py"
+    )
+    if validator_spec is None or validator_spec.loader is None:
+        raise SystemExit("Could not load quick_validate.py for frontmatter regression check.")
+    validator = importlib.util.module_from_spec(validator_spec)
+    validator_spec.loader.exec_module(validator)
+    frontmatter, frontmatter_errors = validator.parse_frontmatter(SKILL_DIR / "SKILL.md")
+    if frontmatter_errors:
+        raise SystemExit("Frontmatter parser returned errors: " + "; ".join(frontmatter_errors))
+    description = frontmatter.get("description")
+    if not isinstance(description, str) or description.strip() in {">", "|"}:
+        raise SystemExit("Frontmatter description block scalar was not parsed correctly.")
+    if "Fudan University" not in description or "复旦学位论文" not in description:
+        raise SystemExit("Frontmatter description lost expected trigger text.")
+
     run([sys.executable, "scripts/check_markdown_links.py", "--root", str(ROOT)])
     run(
         [
