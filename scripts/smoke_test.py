@@ -142,6 +142,64 @@ def main() -> int:
         if "DOCX中文内容" not in completed.stdout:
             raise SystemExit("Reference reader failed to extract DOCX text.")
 
+        pdf_sample = Path(tmpdir) / "复旦PDF参考.pdf"
+        pdf_sample.write_bytes(b"%PDF-1.4\n% smoke-test placeholder\n")
+
+        fake_modules = Path(tmpdir) / "fake-pdf-modules"
+        fake_modules.mkdir()
+        for module_name in ("pypdf", "PyPDF2", "pdfplumber", "fitz"):
+            (fake_modules / f"{module_name}.py").write_text(
+                "raise ImportError('forced fallback for smoke test')\n",
+                encoding="utf-8",
+            )
+
+        fake_bin = Path(tmpdir) / "fake-pdf-bin"
+        fake_bin.mkdir()
+        fake_pdftotext = fake_bin / "fake_pdftotext.py"
+        fake_pdftotext.write_text(
+            "print('PDF中文内容\\nEnglish PDF content')\n",
+            encoding="utf-8",
+        )
+        if os.name == "nt":
+            launcher = fake_bin / "pdftotext.cmd"
+            launcher.write_text(
+                f'@echo off\n"{sys.executable}" "%~dp0fake_pdftotext.py" %*\n',
+                encoding="utf-8",
+            )
+        else:
+            launcher = fake_bin / "pdftotext"
+            launcher.write_text(
+                f"#!{sys.executable}\n"
+                "from pathlib import Path\n"
+                "import runpy\n"
+                "runpy.run_path(str(Path(__file__).with_name('fake_pdftotext.py')), run_name='__main__')\n",
+                encoding="utf-8",
+            )
+            launcher.chmod(0o755)
+
+        env["FDU_PDF_PATH"] = str(pdf_sample)
+        env["PATH"] = str(fake_bin) + os.pathsep + env.get("PATH", "")
+        env["PYTHONPATH"] = str(fake_modules) + os.pathsep + env.get("PYTHONPATH", "")
+        completed = subprocess.run(
+            [
+                sys.executable,
+                str(SKILL_DIR / "scripts" / "read_reference_file.py"),
+                "--path-env",
+                "FDU_PDF_PATH",
+                "--max-chars",
+                "500",
+            ],
+            cwd=ROOT,
+            env=env,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+        )
+        if "PDF中文内容" not in completed.stdout or "pdf:pdftotext" not in completed.stdout:
+            raise SystemExit("Reference reader failed to extract PDF text through pdftotext fallback.")
+
     with tempfile.TemporaryDirectory(prefix="fdu-latex-") as tmpdir:
         project = Path(tmpdir) / "thesis"
         project.mkdir()

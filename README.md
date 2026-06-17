@@ -118,6 +118,8 @@ python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FD
 
 Use `--pages 1-5` for long PDFs, `--max-chars 0` for full extraction, and `--list-env` for multiple files.
 
+PDF extraction needs at least one optional backend: `pypdf`/`PyPDF2`, `pdfplumber`, `PyMuPDF`, or the `pdftotext` command from Poppler. DOCX and text extraction use the Python standard library.
+
 ## Custom Compliance Sources
 
 Fudan 2026.06 remains the default compliance and template reference. You can also give the skill newer Graduate School links, department notices, supervisor instructions, template files, or a folder of rule documents. The agent should read those sources, state which ones were used, and use Fudan 2026.06 only as the default baseline or fallback for missing items.

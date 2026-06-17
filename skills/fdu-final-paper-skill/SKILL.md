@@ -77,7 +77,7 @@ export FDU_REF_FILE="/path/to/论文资料/reference.pdf"
 python scripts/read_reference_file.py --path-env FDU_REF_FILE -o extracted-reference.md
 ```
 
-Use `--pages 1-5` for long PDFs, `--max-chars 0` when full extraction is needed, and `--list-env` when the user supplies multiple files through one environment variable. If PDF extraction reports that no backend succeeded, treat the file as likely scanned or image-only and switch to an OCR-capable PDF workflow. If the input is legacy `.doc`, ask for or create a `.docx` conversion before relying on text extraction.
+Use `--pages 1-5` for long PDFs, `--max-chars 0` when full extraction is needed, and `--list-env` when the user supplies multiple files through one environment variable. PDF extraction requires at least one backend: `pypdf`/`PyPDF2`, `pdfplumber`, `PyMuPDF`, or Poppler `pdftotext`. If PDF extraction reports that no backend succeeded, treat the file as likely scanned or image-only and switch to an OCR-capable PDF workflow. If the input is legacy `.doc`, ask for or create a `.docx` conversion before relying on text extraction.
 
 ## LaTeX Compilation Debugging
 

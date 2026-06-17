@@ -103,6 +103,8 @@ python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FD
 
 长 PDF 可加 `--pages 1-5`，完整抽取可用 `--max-chars 0`，多个文件可用 `--list-env`。
 
+PDF 抽取需要至少一个可选后端：`pypdf`/`PyPDF2`、`pdfplumber`、`PyMuPDF`，或 Poppler 提供的 `pdftotext` 命令。DOCX 和普通文本抽取使用 Python 标准库。
+
 ## 三分钟试用
 
 ```text
