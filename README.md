@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-Current skill version: `v0.1.1`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
+Current skill version: `v0.1.2`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
 
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
@@ -95,7 +95,7 @@ cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 
 ## Release Notifications
 
-Important changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Maintainers should publish GitHub tags and Releases for user-facing updates, for example `v0.1.0`, `v0.1.1`, and `v0.2.0`.
+Important changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Maintainers should publish GitHub tags and Releases for user-facing updates, for example `v0.1.0`, `v0.1.1`, and `v0.1.2`.
 
 Users who want update notifications can open the GitHub repository, choose **Watch -> Custom -> Releases**, and GitHub will notify them when a new release is published.
 

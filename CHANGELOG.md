@@ -2,17 +2,24 @@
 
 All notable user-facing changes to `fdu-final-paper-skill` are documented here.
 
-This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For each important release, note what changed, what was fixed, whether users should reinstall the skill, and the recommended update command.
+This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.1.2`. For each important release, note what changed, what was fixed, whether users should reinstall the skill, and the recommended update command.
 
 ## Unreleased
+
+- No unreleased changes.
+
+## v0.1.2 - 2026-06-17
+
+### Added
+
+- Added smoke-test coverage for PDF extraction through the `pdftotext` fallback backend.
+- Added golden eval sketches and a rubric checker so eval prompts test source declarations, missing information, claim-evidence risks, and compliance unknowns.
 
 ### Fixed
 
 - Fixed `compile_latex_project.py` on Python 3.8 by avoiding `Path.is_relative_to()`.
 - Fixed `quick_validate.py` so folded YAML descriptions such as `description: >` are parsed as full trigger text instead of the literal `>`.
-- Added smoke-test coverage for PDF extraction through the `pdftotext` fallback backend.
 - Replaced the embedded `latex-paper-skills` README files with snapshot manifests that do not link to omitted upstream assets.
-- Added golden eval sketches and a rubric checker so eval prompts test source declarations, missing information, claim-evidence risks, and compliance unknowns.
 
 ### Changed
 
@@ -20,6 +27,33 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.2.0`. For 
 - Documented optional PDF extraction backends: `pypdf`/`PyPDF2`, `pdfplumber`, `PyMuPDF`, or Poppler `pdftotext`.
 - Markdown link checking now includes `embedded/` and local HTML image/source resources.
 - CI now runs validation and smoke tests on Python 3.8 and 3.11.
+
+### Reinstall Required
+
+- Yes. Users who want the Python 3.8 LaTeX helper fix, updated PDF backend guidance, and refreshed skill routing should reinstall by replacing the local `fdu-final-paper-skill` folder.
+
+### Recommended Update
+
+```bash
+git pull
+
+rm -rf "${CODEX_HOME:-$HOME/.codex}/skills/fdu-final-paper-skill"
+cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+PowerShell:
+
+```powershell
+git pull
+
+$skills = if ($env:CODEX_HOME) { "$env:CODEX_HOME\skills" } else { "$HOME\.codex\skills" }
+$dest = Join-Path $skills "fdu-final-paper-skill"
+
+Remove-Item -Recurse -Force $dest -ErrorAction SilentlyContinue
+Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $skills
+```
+
+Restart Codex after reinstalling.
 
 ## v0.1.1 - 2026-06-16
 

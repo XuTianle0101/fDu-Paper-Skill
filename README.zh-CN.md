@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-当前 skill 版本：`v0.1.1`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
+当前 skill 版本：`v0.1.2`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
 
 上传论文 -> 得到合规报告。给出选题 -> 得到章节规划。贴入草稿 -> 得到 claim-evidence 审查。
 
@@ -80,7 +80,7 @@ cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 
 ## 发布与更新通知
 
-重要更新会记录在 [`CHANGELOG.md`](CHANGELOG.md)。维护者发布面向用户的更新时，建议同步创建 GitHub tag 和 Release，例如 `v0.1.0`、`v0.1.1`、`v0.2.0`。
+重要更新会记录在 [`CHANGELOG.md`](CHANGELOG.md)。维护者发布面向用户的更新时，建议同步创建 GitHub tag 和 Release，例如 `v0.1.0`、`v0.1.1`、`v0.1.2`。
 
 用户如果希望收到更新通知，可以在 GitHub 仓库页面选择 **Watch -> Custom -> Releases**，之后每次发布新 release 时会收到 GitHub 通知。
 
@@ -186,14 +186,12 @@ python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
 
 许可证和第三方说明见 [`LICENSE`](LICENSE) 与 [`NOTICE`](NOTICE)。
 
-![GitHub 手绘 stars](assets/github-stars.svg)
-
 ## Star History
 
-<a href="https://www.star-history.com/#XuTianle0101/fDu-Paper-Skill&Date">
+<a href="https://www.star-history.com/?repos=XuTianle0101%2FfDu-Paper-Skill&type=date&legend=top-left">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=XuTianle0101/fDu-Paper-Skill&type=date&theme=dark&legend=top-left" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=XuTianle0101/fDu-Paper-Skill&type=date&legend=top-left" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=XuTianle0101/fDu-Paper-Skill&type=date&legend=top-left" />
   </picture>
 </a>
