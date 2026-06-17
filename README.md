@@ -241,14 +241,12 @@ GitHub Actions runs a scheduled check so maintainers can notice when the default
 
 MIT for this repository's original content. See [`NOTICE`](NOTICE) for third-party material and attribution.
 
-![Hand-drawn GitHub stars](assets/github-stars.svg)
-
 ## Star History
 
-<a href="https://www.star-history.com/#XuTianle0101/fDu-Paper-Skill&Date">
+<a href="https://www.star-history.com/?repos=XuTianle0101%2FfDu-Paper-Skill&type=date&legend=top-left">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=XuTianle0101/fDu-Paper-Skill&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=XuTianle0101/fDu-Paper-Skill&type=date&theme=dark&legend=top-left" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=XuTianle0101/fDu-Paper-Skill&type=date&legend=top-left" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=XuTianle0101/fDu-Paper-Skill&type=date&legend=top-left" />
   </picture>
 </a>
