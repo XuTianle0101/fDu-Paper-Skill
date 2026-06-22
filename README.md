@@ -2,11 +2,34 @@
 
 English | [简体中文](README.zh-CN.md)
 
+[![CI](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml/badge.svg)](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/XuTianle0101/fDu-Paper-Skill)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/XuTianle0101/fDu-Paper-Skill?label=latest%20release)](https://github.com/XuTianle0101/fDu-Paper-Skill/releases)
+![Skill Version](https://img.shields.io/badge/skill-v0.1.2-0f766e)
+![Python](https://img.shields.io/badge/python-3.8%20%7C%203.11-3776ab)
+![Fudan Baseline](https://img.shields.io/badge/Fudan%20baseline-2026.06-b91c1c)
+![Markdown Links](https://img.shields.io/badge/markdown%20links-passing-15803d)
+
 Current skill version: `v0.1.2`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
 
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
 `fdu-final-paper-skill` is a Codex skill for Fudan master's and doctoral theses. It helps an agent turn messy thesis material into a defensible chapter plan, revise Chinese/English academic prose, check claim-evidence alignment, and audit the thesis against Fudan's 2026.06 thesis specification by default, while allowing newer or department-specific compliance links, files, folders, and templates to override or supplement that baseline.
+
+| Start Here | What You Get |
+| --- | --- |
+| **Paper format compliance check** | A Fudan 2026.06 baseline report with missing front matter, abstract, reference, appendix, and defense-readiness risks. |
+| **Abstract / introduction polish** | Academic Chinese/English revisions that separate verified contribution claims from claims that need evidence. |
+| **LaTeX compile diagnosis** | `fduthesis`-aware checks for package conflicts, output directories, stale PDFs, and BibTeX/Biber handoff problems. |
+
+Real input -> output diff:
+
+```diff
+Input: "本文首次提出城市热岛综合评估框架，并证明模型显著优于现有方法。"
+- 本文首次提出城市热岛综合评估框架，并证明模型显著优于现有方法。
++ 本文构建了面向城市热岛时空演化的综合评估框架，并在 Landsat 2013-2023、MODIS LST 与 POI 密度数据上验证了其适用性。
++ [Evidence risk] "首次" and "显著优于" need prior-art comparison, statistical tests, or softer wording before submission.
+```
 
 ![Compliance report screenshot](assets/product-screenshot.svg)
 
@@ -55,9 +78,11 @@ Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
 Optional checkout validation for maintainers:
 
 ```bash
-python scripts/quick_validate.py skills/fdu-final-paper-skill
-python scripts/smoke_test.py
+python3 scripts/quick_validate.py skills/fdu-final-paper-skill
+python3 scripts/smoke_test.py
 ```
+
+Commands in this README use `python3`; if your environment exposes only `python`, replace `python3` with `python`.
 
 ## Updating an Installed Skill
 
@@ -104,7 +129,7 @@ Users who want update notifications can open the GitHub repository, choose **Wat
 The installed skill includes a reader for Chinese/English PDFs, DOCX files, and text-like references:
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/reference.pdf" \
+python3 skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/reference.pdf" \
   -o extracted-reference.md
 ```
 
@@ -112,7 +137,7 @@ If a Chinese path is garbled by the shell, pass it through an environment variab
 
 ```powershell
 $env:FDU_REF_FILE = "D:\论文资料\参考文献\中文论文.docx"
-python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FDU_REF_FILE `
+python3 skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FDU_REF_FILE `
   -o extracted-reference.md
 ```
 
@@ -138,7 +163,7 @@ Additional compliance sources:
 For local rule folders, extract the source set first when needed:
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/read_reference_file.py \
+python3 skills/fdu-final-paper-skill/scripts/read_reference_file.py \
   --glob "docs/compliance/**/*.pdf" \
   --glob "docs/compliance/**/*.docx" \
   --glob "docs/compliance/**/*.md" \
@@ -150,14 +175,14 @@ python skills/fdu-final-paper-skill/scripts/read_reference_file.py \
 For `fduthesis` projects, start with the bundled compiler helper instead of hand-rolling wrapper logic:
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
+python3 skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
   --project-dir path/to/thesis --main main.tex --engine auto
 ```
 
 If the project uses a build directory:
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
+python3 skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
   --project-dir path/to/thesis --main main.tex --engine auto --output-dir build
 ```
 
@@ -185,7 +210,7 @@ Use $fdu-final-paper-skill to audit my thesis for Fudan 2026 compliance.
 Input files: thesis.pdf, thesis.tex, ref.bib
 ```
 
-Replay the scripted terminal flow in [`assets/demo.cast`](assets/demo.cast), or read the concrete outputs in [`examples/`](examples/).
+Watch the scripted terminal flow as [`GIF`](assets/demo.gif), [`MP4`](assets/demo.mp4), or the source [`cast`](assets/demo.cast); concrete outputs live in [`examples/`](examples/).
 
 ## Example Output
 
@@ -222,7 +247,7 @@ More examples:
 ├── scripts/                            # repo validation helpers
 ├── embedded/latex-paper-skills/        # optional MIT-licensed LaTeX helper bundle
 ├── skills/.../references/              # default Fudan checklist and source policy
-├── assets/                             # README screenshot and demo cast
+├── assets/                             # README screenshot and demo media
 └── .github/workflows/ci.yml            # validation and Fudan spec watch
 ```
 
@@ -231,7 +256,7 @@ More examples:
 The skill includes a snapshot of the default Fudan Graduate School thesis-spec page and a checker:
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
+python3 skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
   --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md
 ```
 

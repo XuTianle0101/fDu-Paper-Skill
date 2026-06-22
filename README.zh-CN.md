@@ -2,11 +2,34 @@
 
 [English](README.md) | 简体中文
 
+[![CI](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml/badge.svg)](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/github/license/XuTianle0101/fDu-Paper-Skill)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/XuTianle0101/fDu-Paper-Skill?label=latest%20release)](https://github.com/XuTianle0101/fDu-Paper-Skill/releases)
+![Skill Version](https://img.shields.io/badge/skill-v0.1.2-0f766e)
+![Python](https://img.shields.io/badge/python-3.8%20%7C%203.11-3776ab)
+![Fudan Baseline](https://img.shields.io/badge/Fudan%20baseline-2026.06-b91c1c)
+![Markdown Links](https://img.shields.io/badge/markdown%20links-passing-15803d)
+
 当前 skill 版本：`v0.1.2`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
 
 上传论文 -> 得到合规报告。给出选题 -> 得到章节规划。贴入草稿 -> 得到 claim-evidence 审查。
 
 这是一个面向复旦大学硕士、博士学位论文的 Codex skill，用于目录规划、摘要/绪论/结论修改、证据链检查、答辩前自查、LaTeX/BibTeX 工作流和论文规范合规检查。默认以复旦 2026.06 版规范作为合规审查和模板参考，也支持使用更新的研究生院链接、院系规则、导师/教务说明、模板文件或规则文件夹覆盖或补充默认基线。
+
+| 先用这 3 个场景 | 你会得到 |
+| --- | --- |
+| **论文格式合规检查** | 按复旦 2026.06 基线输出封面、摘要、参考文献、附录、答辩前风险等清单。 |
+| **摘要/绪论润色** | 改写学术表达，同时标出“创新性”“首次”“显著优于”等需要证据支撑的句子。 |
+| **LaTeX 编译诊断** | 面向 `fduthesis` 检查包冲突、输出目录、旧 PDF、BibTeX/Biber 衔接等问题。 |
+
+真实输入 -> 输出 diff：
+
+```diff
+输入："本文首次提出城市热岛综合评估框架，并证明模型显著优于现有方法。"
+- 本文首次提出城市热岛综合评估框架，并证明模型显著优于现有方法。
++ 本文构建了面向城市热岛时空演化的综合评估框架，并在 Landsat 2013-2023、MODIS LST 与 POI 密度数据上验证了其适用性。
++ [证据风险] “首次”“显著优于”需要补充前人工作对比、统计检验，或在送审前改成更稳妥的表述。
+```
 
 ![合规报告截图](assets/product-screenshot.svg)
 
@@ -43,6 +66,8 @@ Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
 ```text
 Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
 ```
+
+本文档里的维护命令统一使用 `python3`；如果你的环境只暴露 `python`，把 `python3` 替换成 `python` 即可。
 
 ## 更新已安装的 skill
 
@@ -89,7 +114,7 @@ cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 已安装的 skill 内置了读取脚本，可先把中文/英文 PDF、DOCX 和常见文本参考资料抽取为 UTF-8 Markdown，再交给 agent 分析：
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/reference.pdf" \
+python3 skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/reference.pdf" \
   -o extracted-reference.md
 ```
 
@@ -97,7 +122,7 @@ python skills/fdu-final-paper-skill/scripts/read_reference_file.py "path/to/refe
 
 ```powershell
 $env:FDU_REF_FILE = "D:\论文资料\参考文献\中文论文.docx"
-python skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FDU_REF_FILE `
+python3 skills\fdu-final-paper-skill\scripts\read_reference_file.py --path-env FDU_REF_FILE `
   -o extracted-reference.md
 ```
 
@@ -122,7 +147,7 @@ Use $fdu-final-paper-skill to revise my Chinese abstract and check claim-evidenc
 Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
 ```
 
-示例输出见 [`examples/`](examples/)，脚本化录屏见 [`assets/demo.cast`](assets/demo.cast)。
+脚本化录屏可查看 [`GIF`](assets/demo.gif)、[`MP4`](assets/demo.mp4) 或源文件 [`cast`](assets/demo.cast)，示例输出见 [`examples/`](examples/)。
 
 ## 能力重点
 
@@ -150,7 +175,7 @@ Additional compliance sources:
 如果本地规则文件放在一个文件夹里，可先抽取为 Markdown：
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/read_reference_file.py \
+python3 skills/fdu-final-paper-skill/scripts/read_reference_file.py \
   --glob "docs/compliance/**/*.pdf" \
   --glob "docs/compliance/**/*.docx" \
   --glob "docs/compliance/**/*.md" \
@@ -162,14 +187,14 @@ python skills/fdu-final-paper-skill/scripts/read_reference_file.py \
 对 `fduthesis` 项目，优先用内置辅助脚本跑第一轮诊断：
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
+python3 skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
   --project-dir path/to/thesis --main main.tex --engine auto
 ```
 
 如果项目使用 build 输出目录：
 
 ```bash
-python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
+python3 skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
   --project-dir path/to/thesis --main main.tex --engine auto --output-dir build
 ```
 
@@ -178,9 +203,9 @@ python skills/fdu-final-paper-skill/scripts/compile_latex_project.py \
 ## 维护
 
 ```bash
-python scripts/quick_validate.py skills/fdu-final-paper-skill
-python scripts/smoke_test.py
-python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
+python3 scripts/quick_validate.py skills/fdu-final-paper-skill
+python3 scripts/smoke_test.py
+python3 skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
   --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md
 ```
 
