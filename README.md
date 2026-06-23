@@ -5,12 +5,12 @@ English | [简体中文](README.zh-CN.md)
 [![CI](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml/badge.svg)](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/github/license/XuTianle0101/fDu-Paper-Skill)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/XuTianle0101/fDu-Paper-Skill?label=latest%20release)](https://github.com/XuTianle0101/fDu-Paper-Skill/releases)
-![Skill Version](https://img.shields.io/badge/skill-v0.1.2-0f766e)
+![Skill Version](https://img.shields.io/badge/skill-v0.2.0-0f766e)
 ![Python](https://img.shields.io/badge/python-3.8%20%7C%203.11-3776ab)
 ![Fudan Baseline](https://img.shields.io/badge/Fudan%20baseline-2026.06-b91c1c)
 ![Markdown Links](https://img.shields.io/badge/markdown%20links-passing-15803d)
 
-Current skill version: `v0.1.2`. The canonical version source is [`skills/fdu-final-paper-skill/VERSION`](skills/fdu-final-paper-skill/VERSION); see [`CHANGELOG.md`](CHANGELOG.md) for release notes.
+Current skill version: `v0.2.0`. The canonical version source is [`skills/fdu-final-paper-skill/VERSION`](skills/fdu-final-paper-skill/VERSION); see [`CHANGELOG.md`](CHANGELOG.md) for release notes.
 
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
@@ -129,7 +129,7 @@ cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 
 ## Release Notifications
 
-Important changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Maintainers should publish GitHub tags and Releases for user-facing updates, for example `v0.1.0`, `v0.1.1`, and `v0.1.2`.
+Important changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Maintainers should publish GitHub tags and Releases for user-facing updates, for example `v0.1.0`, `v0.1.2`, and `v0.2.0`.
 
 Users who want update notifications can open the GitHub repository, choose **Watch -> Custom -> Releases**, and GitHub will notify them when a new release is published.
 

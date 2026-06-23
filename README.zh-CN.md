@@ -5,12 +5,12 @@
 [![CI](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml/badge.svg)](https://github.com/XuTianle0101/fDu-Paper-Skill/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/github/license/XuTianle0101/fDu-Paper-Skill)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/XuTianle0101/fDu-Paper-Skill?label=latest%20release)](https://github.com/XuTianle0101/fDu-Paper-Skill/releases)
-![Skill Version](https://img.shields.io/badge/skill-v0.1.2-0f766e)
+![Skill Version](https://img.shields.io/badge/skill-v0.2.0-0f766e)
 ![Python](https://img.shields.io/badge/python-3.8%20%7C%203.11-3776ab)
 ![Fudan Baseline](https://img.shields.io/badge/Fudan%20baseline-2026.06-b91c1c)
 ![Markdown Links](https://img.shields.io/badge/markdown%20links-passing-15803d)
 
-当前 skill 版本：`v0.1.2`。规范版本来源以 [`skills/fdu-final-paper-skill/VERSION`](skills/fdu-final-paper-skill/VERSION) 为准；更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
+当前 skill 版本：`v0.2.0`。规范版本来源以 [`skills/fdu-final-paper-skill/VERSION`](skills/fdu-final-paper-skill/VERSION) 为准；更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
 
 上传论文 -> 得到合规报告。给出选题 -> 得到章节规划。贴入草稿 -> 得到 claim-evidence 审查。
 
@@ -117,7 +117,7 @@ cp -R skills/fdu-final-paper-skill "${CODEX_HOME:-$HOME/.codex}/skills/"
 
 ## 发布与更新通知
 
-重要更新会记录在 [`CHANGELOG.md`](CHANGELOG.md)。维护者发布面向用户的更新时，建议同步创建 GitHub tag 和 Release，例如 `v0.1.0`、`v0.1.1`、`v0.1.2`。
+重要更新会记录在 [`CHANGELOG.md`](CHANGELOG.md)。维护者发布面向用户的更新时，建议同步创建 GitHub tag 和 Release，例如 `v0.1.0`、`v0.1.2`、`v0.2.0`。
 
 用户如果希望收到更新通知，可以在 GitHub 仓库页面选择 **Watch -> Custom -> Releases**，之后每次发布新 release 时会收到 GitHub 通知。
 
