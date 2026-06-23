@@ -10,7 +10,7 @@
 ![Fudan Baseline](https://img.shields.io/badge/Fudan%20baseline-2026.06-b91c1c)
 ![Markdown Links](https://img.shields.io/badge/markdown%20links-passing-15803d)
 
-当前 skill 版本：`v0.1.2`。更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
+当前 skill 版本：`v0.1.2`。规范版本来源以 [`skills/fdu-final-paper-skill/VERSION`](skills/fdu-final-paper-skill/VERSION) 为准；更新记录见 [`CHANGELOG.md`](CHANGELOG.md)。
 
 上传论文 -> 得到合规报告。给出选题 -> 得到章节规划。贴入草稿 -> 得到 claim-evidence 审查。
 
@@ -32,6 +32,12 @@
 ```
 
 ![合规报告截图](assets/product-screenshot.svg)
+
+## 信任与隐私边界
+
+本项目不是复旦大学官方服务，输出的合规报告不代表学校、研究生院、院系或导师的正式审核、批准或送审结论。论文格式、提交、保密、抽检和答辩要求，始终以当前研究生院、院系/项目、图书馆和导师的正式说明为准。
+
+学位论文材料可能包含未发表研究、个人信息、导师批注、伦理审批、基金信息或涉密内容。不要把涉密论文、敏感个人数据、未公开数据集或受限评审材料上传到你不信任或无权使用的模型、服务、插件或托管 agent。
 
 ## 一分钟安装
 

@@ -66,6 +66,7 @@ def main() -> int:
     require(ROOT / "CONTRIBUTING.md")
     require(ROOT / "CHANGELOG.md")
     require(ROOT / ".gitignore")
+    require(SKILL_DIR / "VERSION")
     require(SKILL_DIR / "SKILL.md")
     require(SKILL_DIR / "references" / "compliance-source-policy.md")
     require(SKILL_DIR / "references" / "fudan-2026-format-checklist.md")
@@ -90,6 +91,7 @@ def main() -> int:
         missing = required_prompt_keys - set(item)
         if missing:
             raise SystemExit(f"Eval prompt {item.get('id', '<missing id>')} missing {sorted(missing)}")
+    run([sys.executable, "scripts/check_version_consistency.py"])
     run([sys.executable, "scripts/check_eval_outputs.py"])
 
     run([sys.executable, "scripts/quick_validate.py", str(SKILL_DIR)])

@@ -29,6 +29,7 @@ AGENTS_KEYWORD_GROUPS = [
     ("LaTeX workflow", ("latex", "fduthesis", "编译")),
     ("compliance workflow", ("compliance", "audit", "合规", "检查")),
 ]
+VERSION_RE = re.compile(r"^v\d+\.\d+\.\d+(?:[-+][A-Za-z0-9.-]+)?$")
 
 
 def strip_quotes(value: str) -> str:
@@ -211,6 +212,14 @@ def validate_skill(path: Path) -> list[str]:
         return [f"Skill path is not a directory: {skill_dir}"]
     if not skill_md.is_file():
         return [f"Missing SKILL.md: {skill_md}"]
+
+    version_file = skill_dir / "VERSION"
+    if not version_file.is_file():
+        errors.append("Missing VERSION file")
+    else:
+        version = version_file.read_text(encoding="utf-8").strip()
+        if not VERSION_RE.match(version):
+            errors.append("VERSION must contain a semantic version like v1.2.3")
 
     data, parse_errors = parse_frontmatter(skill_md)
     errors.extend(parse_errors)

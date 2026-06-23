@@ -8,6 +8,8 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.1.2`. For 
 
 ### Added
 
+- Added `skills/fdu-final-paper-skill/VERSION` as the canonical skill version source and a version consistency check for README badges, README version text, and CHANGELOG release headings.
+- Added README trust and privacy boundaries clarifying that the project is not an official Fudan review service and that sensitive or confidential thesis materials should not be uploaded to untrusted systems.
 - Added Windows GitHub Actions coverage for Python 3.8 and 3.11, including the smoke-test paths for Chinese filenames, `read_reference_file.py --path-env`, and fake `pdftotext.cmd` fallback behavior.
 - Added a Windows-only CI check that exercises the documented PowerShell install copy command.
 

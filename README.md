@@ -10,7 +10,7 @@ English | [简体中文](README.zh-CN.md)
 ![Fudan Baseline](https://img.shields.io/badge/Fudan%20baseline-2026.06-b91c1c)
 ![Markdown Links](https://img.shields.io/badge/markdown%20links-passing-15803d)
 
-Current skill version: `v0.1.2`. See [`CHANGELOG.md`](CHANGELOG.md) for release notes.
+Current skill version: `v0.1.2`. The canonical version source is [`skills/fdu-final-paper-skill/VERSION`](skills/fdu-final-paper-skill/VERSION); see [`CHANGELOG.md`](CHANGELOG.md) for release notes.
 
 Upload thesis -> get compliance report. Topic -> chapter plan. Draft -> claim-evidence audit.
 
@@ -32,6 +32,12 @@ Input: "本文首次提出城市热岛综合评估框架，并证明模型显著
 ```
 
 ![Compliance report screenshot](assets/product-screenshot.svg)
+
+## Trust and Privacy Boundaries
+
+This project is not an official Fudan University service, and its compliance reports are not official approval, review, or submission decisions. Always treat current Fudan Graduate School, department, program, library, and supervisor instructions as the final authority.
+
+Thesis files can contain unpublished research, personal information, supervisor comments, ethics approvals, funding details, or confidential material. Do not upload confidential theses, sensitive personal data, unpublished datasets, or restricted review materials to models, services, plugins, or hosted agents that you do not trust or are not authorized to use.
 
 ## Why Use It
 
