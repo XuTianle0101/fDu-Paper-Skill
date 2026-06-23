@@ -6,7 +6,18 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.1.2`. For 
 
 ## Unreleased
 
-- No unreleased changes.
+### Added
+
+- Added Windows GitHub Actions coverage for Python 3.8 and 3.11, including the smoke-test paths for Chinese filenames, `read_reference_file.py --path-env`, and fake `pdftotext.cmd` fallback behavior.
+- Added a Windows-only CI check that exercises the documented PowerShell install copy command.
+
+### Changed
+
+- Improved `scripts/smoke_test.py` diagnostics so failing subprocess checks print the command, working directory, return code, stdout, and stderr.
+
+### Fixed
+
+- Fixed `read_reference_file.py` so the `pdftotext` fallback resolves Windows `.cmd` launchers through `PATH`, allowing smoke tests and user environments to exercise Poppler-compatible wrappers reliably.
 
 ## v0.1.2 - 2026-06-17
 

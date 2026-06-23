@@ -9,10 +9,11 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: ["ubuntu-latest", "windows-latest"]
         python-version: ["3.8", "3.11"]
     steps:
       - name: Check out repository
@@ -32,15 +33,21 @@ jobs:
       - name: Run smoke tests
         run: python scripts/smoke_test.py
 
-      - name: Check Fudan spec snapshot offline
+      - name: Check PowerShell install command
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
         run: |
-          python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
-            --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md \
-            --offline
+          $target = Join-Path $env:RUNNER_TEMP "codex-skills"
+          New-Item -ItemType Directory -Force -Path $target | Out-Null
+          Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
+          $installedSkill = Join-Path $target "fdu-final-paper-skill\SKILL.md"
+          if (-not (Test-Path $installedSkill)) {
+            throw "PowerShell install command did not copy SKILL.md to $installedSkill"
+          }
+
+      - name: Check Fudan spec snapshot offline
+        run: python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md --offline
 
       - name: Watch official Fudan spec page
-        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.python-version == '3.11'
-        run: |
-          python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py \
-            --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md \
-            --fail-on-change
+        if: (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && matrix.python-version == '3.11' && matrix.os == 'ubuntu-latest'
+        run: python skills/fdu-final-paper-skill/scripts/check_fudan_spec_update.py --reference skills/fdu-final-paper-skill/references/fudan-2026-format-checklist.md --fail-on-change

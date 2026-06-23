@@ -18,7 +18,41 @@ SKILL_DIR = ROOT / "skills" / "fdu-final-paper-skill"
 
 
 def run(cmd: list[str]) -> None:
-    subprocess.run(cmd, cwd=ROOT, check=True)
+    run_checked(cmd)
+
+
+def format_command(cmd: list[str]) -> str:
+    return " ".join(str(part) for part in cmd)
+
+
+def run_checked(
+    cmd: list[str],
+    *,
+    cwd: Path = ROOT,
+    env: dict[str, str] | None = None,
+    check: bool = True,
+) -> subprocess.CompletedProcess[str]:
+    completed = subprocess.run(
+        cmd,
+        cwd=cwd,
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if check and completed.returncode != 0:
+        print("Smoke command failed.", file=sys.stderr)
+        print(f"Command: {format_command(cmd)}", file=sys.stderr)
+        print(f"CWD: {cwd}", file=sys.stderr)
+        print(f"Return code: {completed.returncode}", file=sys.stderr)
+        print("--- stdout ---", file=sys.stderr)
+        print(completed.stdout or "<empty>", file=sys.stderr)
+        print("--- stderr ---", file=sys.stderr)
+        print(completed.stderr or "<empty>", file=sys.stderr)
+        raise SystemExit(completed.returncode)
+    return completed
 
 
 def require(path: Path) -> None:
@@ -91,7 +125,7 @@ def main() -> int:
         sample.write_text("复旦论文参考文件\nEnglish reference text", encoding="utf-8")
         env = os.environ.copy()
         env["FDU_REFERENCE_PATH"] = str(sample)
-        completed = subprocess.run(
+        completed = run_checked(
             [
                 sys.executable,
                 str(SKILL_DIR / "scripts" / "read_reference_file.py"),
@@ -100,13 +134,7 @@ def main() -> int:
                 "--max-chars",
                 "500",
             ],
-            cwd=ROOT,
             env=env,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
         )
         if "复旦论文参考文件" not in completed.stdout:
             raise SystemExit("Reference reader failed to preserve Chinese text.")
@@ -123,7 +151,7 @@ def main() -> int:
         with zipfile.ZipFile(docx_sample, "w") as docx:
             docx.writestr("word/document.xml", document_xml)
         env["FDU_DOCX_PATH"] = str(docx_sample)
-        completed = subprocess.run(
+        completed = run_checked(
             [
                 sys.executable,
                 str(SKILL_DIR / "scripts" / "read_reference_file.py"),
@@ -132,13 +160,7 @@ def main() -> int:
                 "--max-chars",
                 "500",
             ],
-            cwd=ROOT,
             env=env,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
         )
         if "DOCX中文内容" not in completed.stdout:
             raise SystemExit("Reference reader failed to extract DOCX text.")
@@ -158,7 +180,8 @@ def main() -> int:
         fake_bin.mkdir()
         fake_pdftotext = fake_bin / "fake_pdftotext.py"
         fake_pdftotext.write_text(
-            "print('PDF中文内容\\nEnglish PDF content')\n",
+            "import sys\n"
+            "sys.stdout.buffer.write('PDF中文内容\\nEnglish PDF content\\n'.encode('utf-8'))\n",
             encoding="utf-8",
         )
         if os.name == "nt":
@@ -181,7 +204,7 @@ def main() -> int:
         env["FDU_PDF_PATH"] = str(pdf_sample)
         env["PATH"] = str(fake_bin) + os.pathsep + env.get("PATH", "")
         env["PYTHONPATH"] = str(fake_modules) + os.pathsep + env.get("PYTHONPATH", "")
-        completed = subprocess.run(
+        completed = run_checked(
             [
                 sys.executable,
                 str(SKILL_DIR / "scripts" / "read_reference_file.py"),
@@ -190,16 +213,16 @@ def main() -> int:
                 "--max-chars",
                 "500",
             ],
-            cwd=ROOT,
             env=env,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
         )
         if "PDF中文内容" not in completed.stdout or "pdf:pdftotext" not in completed.stdout:
-            raise SystemExit("Reference reader failed to extract PDF text through pdftotext fallback.")
+            raise SystemExit(
+                "Reference reader failed to extract PDF text through pdftotext fallback.\n"
+                "--- stdout ---\n"
+                + (completed.stdout or "<empty>")
+                + "\n--- stderr ---\n"
+                + (completed.stderr or "<empty>")
+            )
 
     with tempfile.TemporaryDirectory(prefix="fdu-latex-") as tmpdir:
         project = Path(tmpdir) / "thesis"
@@ -217,7 +240,7 @@ def main() -> int:
         )
         (project / "chapters" / "intro.tex").write_text("正文", encoding="utf-8")
 
-        completed = subprocess.run(
+        completed = run_checked(
             [
                 sys.executable,
                 str(SKILL_DIR / "scripts" / "compile_latex_project.py"),
@@ -227,14 +250,16 @@ def main() -> int:
                 "main.tex",
                 "--preflight-only",
             ],
-            cwd=ROOT,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
+            check=False,
         )
         if completed.returncode != 2 or "amssymb" not in completed.stdout:
-            raise SystemExit("LaTeX preflight did not flag fduthesis/amssymb conflict.")
+            raise SystemExit(
+                "LaTeX preflight did not flag fduthesis/amssymb conflict.\n"
+                "--- stdout ---\n"
+                + (completed.stdout or "<empty>")
+                + "\n--- stderr ---\n"
+                + (completed.stderr or "<empty>")
+            )
 
         fake_bin = Path(tmpdir) / "fake-bin"
         fake_bin.mkdir()
@@ -288,7 +313,7 @@ raise SystemExit(12)
 
         env = os.environ.copy()
         env["PATH"] = str(fake_bin) + os.pathsep + env.get("PATH", "")
-        completed = subprocess.run(
+        completed = run_checked(
             [
                 sys.executable,
                 str(SKILL_DIR / "scripts" / "compile_latex_project.py"),
@@ -301,12 +326,8 @@ raise SystemExit(12)
                 "--output-dir",
                 "build",
             ],
-            cwd=ROOT,
             env=env,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
+            check=False,
         )
         if completed.returncode != 0:
             raise SystemExit(

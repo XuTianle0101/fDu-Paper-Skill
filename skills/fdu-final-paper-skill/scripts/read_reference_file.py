@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import glob as globlib
 import os
+import shutil
 import subprocess
 import sys
 import zipfile
@@ -328,7 +329,8 @@ def extract_pdf_with_pymupdf(path: Path, pages: set[int] | None) -> tuple[str, s
 
 
 def extract_pdf_with_pdftotext(path: Path, pages: set[int] | None) -> tuple[str, str, list[str]]:
-    command = ["pdftotext", "-layout", "-enc", "UTF-8"]
+    executable = shutil.which("pdftotext") or "pdftotext"
+    command = [executable, "-layout", "-enc", "UTF-8"]
     warnings: list[str] = []
 
     if pages:
