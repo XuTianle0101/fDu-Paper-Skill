@@ -6,7 +6,8 @@ description: >
   English, or bilingual form. Trigger for Chinese requests such as 复旦毕业论文,
   复旦学位论文, 硕士论文, 博士论文, 论文目录, 摘要润色, 绪论修改, 结论与展望, 答辩前检查,
   格式审查, 合规检查, 复旦 2026 论文规范, claim-evidence 对齐, LaTeX/BibTeX,
-  fduthesis 编译调试, 自定义院系规范, 合规来源文件夹, or Word DOCX thesis editing.
+  fduthesis 编译调试, 自定义院系规范, 合规来源文件夹, or DOCX editing
+  for Fudan degree-thesis files.
   Covers graduate thesis structure, chapter logic, abstract/front matter,
   references, appendices, publication records, acknowledgements,
   defense-readiness, LaTeX compilation diagnostics, default Fudan 2026 thesis
@@ -103,129 +104,11 @@ For Fudan thesis projects using `fduthesis` or `unicode-math`, do not add `amssy
 6. Select the compliance source set, defaulting to Fudan 2026.06 when no override is supplied, then check front matter, abstract/keywords, figure/table lists, references, notes, appendices, and required declarations.
 7. Finalize with a consistency audit: abstract, introduction objectives, chapter summaries, final conclusions, innovations, and limitations must say the same thing.
 
-## Whole-Thesis Order
+## Architecture and Section Writing References
 
-Use this order as a starting point, then adapt to the current official template and department requirements:
+Read `references/thesis-architecture.md` when the user asks for a thesis outline, chapter tree, table of contents, chapter sequence, whole-thesis structure, degree-level architecture, article-based dissertation plan, or practice/design/application-oriented thesis organization.
 
-1. Cover/title page and other required preliminary pages.
-2. Originality statement, authorization statement, or other required declarations.
-3. Chinese abstract and keywords.
-4. English abstract and keywords.
-5. Table of contents.
-6. List of figures and list of tables when the thesis contains figures/tables and the current rule requires them.
-7. Abbreviations, symbols, nomenclature, or glossary when useful.
-8. Main text, including a conclusion chapter or conclusion section.
-9. References.
-10. Research outputs during the degree period if required.
-11. Acknowledgements.
-12. Appendices when needed.
-
-## Chapter Architecture
-
-### General Master's Thesis
-
-Use this for a focused thesis with one central research question and two to four evidence chapters:
-
-1. Introduction.
-2. Literature review, theoretical basis, data/materials, or research method foundation.
-3. Core study 1: model, method, data, corpus, fieldwork, experiment, design, proof, or case analysis.
-4. Core study 2: result analysis, validation, comparison, mechanism explanation, or application.
-5. Core study 3 when it answers a distinct question; otherwise merge with Chapter 4.
-6. Conclusion and outlook.
-
-### General Doctoral Thesis
-
-Use this for a dissertation with multiple connected studies:
-
-1. Introduction: broad problem, literature map, research gaps, objectives, contribution map.
-2. Theory, methods, data/materials, or shared analytical framework.
-3. Foundational study or model/system/corpus/data construction.
-4. Study 1.
-5. Study 2.
-6. Study 3.
-7. Integrated discussion, cross-study synthesis, or final application if warranted.
-8. Conclusion and outlook.
-
-### Article-Based or Multi-Paper Thesis
-
-Use this when chapters map to published or publishable studies:
-
-1. Introduction and integrated contribution map.
-2. Shared background, literature synthesis, and methodology.
-3. Paper/study chapter 1.
-4. Paper/study chapter 2.
-5. Paper/study chapter 3.
-6. General discussion: cross-paper synthesis, common limitations, broader contribution.
-7. Conclusion and outlook.
-
-### Practice-, Design-, or Application-Oriented Thesis
-
-Use this when the thesis is organized around a practical problem, artifact, system, intervention, policy, translation, or professional scenario:
-
-1. Introduction and problem definition.
-2. Related work, requirements, standards, constraints, or theoretical basis.
-3. Design/method/data/system/case construction.
-4. Implementation, analysis, evaluation, or field application.
-5. Validation, comparison, user study, expert review, robustness test, or reflective evaluation.
-6. Conclusion and outlook.
-
-## Per-Chapter Writing Rules
-
-### Abstract
-
-Write the abstract as a compressed version of the whole thesis:
-
-1. Start with the research problem and why it matters.
-2. State the gap or unresolved limitation.
-3. State the objective and scope.
-4. Summarize methods and evidence in the same order as the thesis.
-5. Report findings and contributions; include quantitative or textual evidence only when supplied.
-6. End with significance, application value, theoretical value, or implications.
-7. Keep Chinese and English abstracts structurally equivalent; preserve names, technical terms, standards, models, datasets, and numbers.
-
-Do not invent results, citations, sample sizes, experimental settings, survey counts, supervisor information, or publication records.
-
-### Introduction
-
-Build the introduction as a funnel:
-
-1. Research background: move from broad field to the specific problem.
-2. Literature review: organize by research question, approach, school of thought, method, or evidence type rather than by one-paper-at-a-time summaries.
-3. Research gap: close each review cluster with a limitation or open question.
-4. Research objective and significance: connect the gap to the thesis objective.
-5. Research content and structure: map each chapter to a question and evidence type.
-6. Innovations or contributions: list only defensible claims supported by later chapters.
-
-### Method, Theory, Data, or Foundation Chapter
-
-Use this chapter to avoid repeating reusable material later. Depending on discipline, include:
-
-- Core concepts, theory, formulas, assumptions, or definitions.
-- Data/material sources, corpus/sample selection, case selection, field sites, instruments, or archives.
-- Methodological workflow, preprocessing, measurement, coding, modeling, proof, interpretation, or evaluation protocol.
-- Standards, benchmarks, ethical approvals, reliability/validity checks, uncertainty, or limitations.
-- Reproducibility details needed for another researcher to understand what was done.
-
-### Core Research Chapters
-
-Use one core chapter per independent research question. A strong chapter usually follows:
-
-1. Opening: state the local question and why it follows from earlier chapters.
-2. Materials/methods/data/case/model: define evidence and procedure.
-3. Results or findings: present observations in a stable order.
-4. Discussion: interpret mechanism/meaning, compare with literature or standards, explain discrepancies, and state limits.
-5. Chapter summary: give 3-5 conclusion-style points, not a procedural recap.
-
-### Final Chapter
-
-Separate these four items:
-
-1. Main work: what the thesis did, by chapter.
-2. Main conclusions: findings supported by evidence.
-3. Contributions or innovations: align with the introduction and avoid inflated language.
-4. Limitations and outlook: pair each limitation with a realistic future step.
-
-Do not introduce major new literature, data, or experiments in the final chapter.
+Read `references/section-writing.md` when the user asks to draft, revise, compare, or audit an abstract, introduction, method/theory/data/foundation chapter, core research chapter, final chapter, conclusion, contribution section, limitation section, or chapter summary.
 
 ## Writing Quality Checks
 

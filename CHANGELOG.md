@@ -8,6 +8,7 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.1.2`. For 
 
 ### Added
 
+- Added `references/thesis-architecture.md` and `references/section-writing.md` so chapter-planning and section-writing guidance can load only when needed.
 - Added `skills/fdu-final-paper-skill/VERSION` as the canonical skill version source and a version consistency check for README badges, README version text, and CHANGELOG release headings.
 - Added README trust and privacy boundaries clarifying that the project is not an official Fudan review service and that sensitive or confidential thesis materials should not be uploaded to untrusted systems.
 - Added Windows GitHub Actions coverage for Python 3.8 and 3.11, including the smoke-test paths for Chinese filenames, `read_reference_file.py --path-env`, and fake `pdftotext.cmd` fallback behavior.
@@ -15,6 +16,8 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.1.2`. For 
 
 ### Changed
 
+- Slimmed `SKILL.md` by moving whole-thesis architecture and per-section writing rules into progressive reference files.
+- Narrowed the frontmatter DOCX trigger to Fudan degree-thesis files so generic Word editing routes to document-focused tools.
 - Improved `scripts/smoke_test.py` diagnostics so failing subprocess checks print the command, working directory, return code, stdout, and stderr.
 
 ### Fixed

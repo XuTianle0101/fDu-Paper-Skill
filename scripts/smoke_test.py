@@ -71,6 +71,8 @@ def main() -> int:
     require(SKILL_DIR / "references" / "compliance-source-policy.md")
     require(SKILL_DIR / "references" / "fudan-2026-format-checklist.md")
     require(SKILL_DIR / "references" / "latex-compile-debugging.md")
+    require(SKILL_DIR / "references" / "section-writing.md")
+    require(SKILL_DIR / "references" / "thesis-architecture.md")
     require(SKILL_DIR / "scripts" / "check_fudan_spec_update.py")
     require(SKILL_DIR / "scripts" / "compile_latex_project.py")
     require(SKILL_DIR / "scripts" / "read_reference_file.py")
