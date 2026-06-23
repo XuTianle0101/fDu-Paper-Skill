@@ -66,6 +66,7 @@ def main() -> int:
     require(ROOT / "CONTRIBUTING.md")
     require(ROOT / "CHANGELOG.md")
     require(ROOT / ".gitignore")
+    require(ROOT / "scripts" / "doctor.py")
     require(SKILL_DIR / "VERSION")
     require(SKILL_DIR / "SKILL.md")
     require(SKILL_DIR / "references" / "compliance-source-policy.md")
@@ -95,6 +96,7 @@ def main() -> int:
             raise SystemExit(f"Eval prompt {item.get('id', '<missing id>')} missing {sorted(missing)}")
     run([sys.executable, "scripts/check_version_consistency.py"])
     run([sys.executable, "scripts/check_eval_outputs.py"])
+    run([sys.executable, "scripts/doctor.py"])
 
     run([sys.executable, "scripts/quick_validate.py", str(SKILL_DIR)])
     validator_spec = importlib.util.spec_from_file_location(

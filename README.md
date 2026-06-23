@@ -84,9 +84,12 @@ Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
 Optional checkout validation for maintainers:
 
 ```bash
+python3 scripts/doctor.py
 python3 scripts/quick_validate.py skills/fdu-final-paper-skill
 python3 scripts/smoke_test.py
 ```
+
+After copying the skill into your local skills folder, run `python3 scripts/doctor.py --require-installed` to verify that Codex can find the installed skill and that optional PDF extraction backends are available.
 
 Commands in this README use `python3`; if your environment exposes only `python`, replace `python3` with `python`.
 

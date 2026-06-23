@@ -73,6 +73,12 @@ Copy-Item -Recurse -Force .\skills\fdu-final-paper-skill $target
 Use $fdu-final-paper-skill to audit my thesis outline for Fudan 2026 compliance.
 ```
 
+安装后可运行自检脚本，确认 Codex 能找到已安装的 skill，并查看 PDF 抽取后端、Poppler、`agents/openai.yaml` 等环境状态：
+
+```bash
+python3 scripts/doctor.py --require-installed
+```
+
 本文档里的维护命令统一使用 `python3`；如果你的环境只暴露 `python`，把 `python3` 替换成 `python` 即可。
 
 ## 更新已安装的 skill
