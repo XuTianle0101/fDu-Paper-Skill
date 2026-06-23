@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PROMPTS = ROOT / "evals" / "prompts.json"
 DEFAULT_OUTPUTS = ROOT / "evals" / "expected"
 REQUIRED_PROMPT_KEYS = {"id", "task_type", "prompt", "expected_checks"}
+OPTIONAL_LIST_KEYS = {"behavior_checks", "forbidden_patterns"}
 GLOBAL_RUBRICS = {
     "source declaration": (
         "source declaration",
@@ -45,6 +46,58 @@ GLOBAL_RUBRICS = {
         "院系确认",
     ),
 }
+BEHAVIOR_RUBRICS = {
+    "declare sources": (
+        "source declaration",
+        "sources used",
+        "来源声明",
+        "使用来源",
+    ),
+    "list unknowns": (
+        "missing inputs",
+        "missing information",
+        "unknowns",
+        "缺失",
+        "未知",
+        "待确认",
+    ),
+    "bound claims to evidence": (
+        "claim-evidence",
+        "evidence status",
+        "unsupported",
+        "证据",
+        "不支持",
+        "不可断言",
+    ),
+    "avoid unverified official conclusions": (
+        "official",
+        "final authority",
+        "department confirmation",
+        "研究生院",
+        "院系确认",
+        "正式说明",
+    ),
+    "avoid fabricated data": (
+        "do not invent",
+        "not supplied",
+        "missing evidence",
+        "未提供",
+        "不得编造",
+        "不可编造",
+    ),
+}
+GLOBAL_FORBIDDEN_PATTERNS = [
+    r"officially approved",
+    r"officially compliant",
+    r"approved by fudan",
+    r"fully compliant with fudan",
+    r"no department confirmation (?:is )?needed",
+    r"无需.*(?:院系|研究生院).*确认",
+    r"已通过.*(?:审核|审查|合规)",
+    r"完全符合.*复旦",
+    r"复旦(?:大学)?(?:已经|已).*批准",
+]
+MIN_FIXTURE_CHARS = 800
 
 
 def normalize(text: str) -> str:
@@ -54,6 +107,10 @@ def normalize(text: str) -> str:
 def contains_any(text: str, terms: tuple[str, ...]) -> bool:
     normalized = normalize(text)
     return any(normalize(term) in normalized for term in terms)
+
+
+def matches_pattern(text: str, pattern: str) -> bool:
+    return re.search(pattern, text, flags=re.IGNORECASE | re.MULTILINE) is not None
 
 
 def load_prompts(path: Path) -> tuple[list[dict], list[str]]:
@@ -83,6 +140,32 @@ def load_prompts(path: Path) -> tuple[list[dict], list[str]]:
         expected_checks = item.get("expected_checks")
         if not isinstance(expected_checks, list) or not all(isinstance(check, str) for check in expected_checks):
             errors.append(f"{path}: item {index} expected_checks must be a list of strings")
+        for key in OPTIONAL_LIST_KEYS:
+            value = item.get(key, [])
+            if not isinstance(value, list) or not all(isinstance(entry, str) for entry in value):
+                errors.append(f"{path}: item {index} {key} must be a list of strings")
+        behavior_checks = item.get("behavior_checks", [])
+        for check in behavior_checks:
+            if check not in BEHAVIOR_RUBRICS:
+                errors.append(f"{path}: item {index} unknown behavior check: {check}")
+        fixture_path = item.get("fixture_path")
+        if fixture_path is not None:
+            if not isinstance(fixture_path, str) or not fixture_path:
+                errors.append(f"{path}: item {index} fixture_path must be a non-empty string")
+            else:
+                resolved_fixture = (path.parent / fixture_path).resolve()
+                evals_root = path.parent.resolve()
+                if not resolved_fixture.is_file():
+                    errors.append(f"{path}: item {index} fixture_path does not exist: {fixture_path}")
+                elif evals_root not in resolved_fixture.parents and resolved_fixture != evals_root:
+                    errors.append(f"{path}: item {index} fixture_path must stay inside {evals_root}")
+                else:
+                    fixture_text = resolved_fixture.read_text(encoding="utf-8")
+                    if len(fixture_text) < MIN_FIXTURE_CHARS:
+                        errors.append(
+                            f"{path}: item {index} fixture_path is too short "
+                            f"({len(fixture_text)} chars); expected at least {MIN_FIXTURE_CHARS}"
+                        )
 
     return prompts, errors
 
@@ -99,9 +182,19 @@ def validate_output(prompt: dict, outputs_dir: Path) -> list[str]:
         if not contains_any(text, terms):
             errors.append(f"{output_path.relative_to(ROOT)}: missing global rubric coverage: {label}")
 
+    for check in prompt.get("behavior_checks", []):
+        terms = BEHAVIOR_RUBRICS[check]
+        if not contains_any(text, terms):
+            errors.append(f"{output_path.relative_to(ROOT)}: missing behavior check: {check}")
+
     for check in prompt["expected_checks"]:
         if normalize(check) not in normalize(text):
             errors.append(f"{output_path.relative_to(ROOT)}: missing expected check phrase: {check}")
+
+    forbidden_patterns = GLOBAL_FORBIDDEN_PATTERNS + prompt.get("forbidden_patterns", [])
+    for pattern in forbidden_patterns:
+        if matches_pattern(text, pattern):
+            errors.append(f"{output_path.relative_to(ROOT)}: forbidden pattern matched: {pattern}")
 
     return errors
 

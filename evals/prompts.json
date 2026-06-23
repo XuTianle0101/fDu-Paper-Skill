@@ -58,5 +58,32 @@
     "task_type": "defense_audit",
     "prompt": "Use $fdu-final-paper-skill to do a defense-readiness audit. I need likely committee questions, weak claims, missing evidence, and a final two-week revision plan.",
     "expected_checks": ["committee questions", "weak claim list", "evidence gaps", "revision plan"]
+  },
+  {
+    "id": "frontmatter-custom-sources",
+    "task_type": "format_compliance",
+    "fixture_path": "fixtures/frontmatter-custom-sources.md",
+    "prompt": "Use $fdu-final-paper-skill to audit the front matter and pasted department note in the fixture. Decide whether it is ready to submit, but do not give an official approval conclusion.",
+    "expected_checks": ["custom source hierarchy", "not ready to submit", "passport-name mismatch", "missing official template", "confidentiality approval unknown"],
+    "behavior_checks": ["declare sources", "list unknowns", "bound claims to evidence", "avoid unverified official conclusions", "avoid fabricated data"],
+    "forbidden_patterns": ["ready to submit without revision", "officially ready", "no confidentiality issue", "passport name is acceptable"]
+  },
+  {
+    "id": "abstract-results-mismatch",
+    "task_type": "abstract_revision",
+    "fixture_path": "fixtures/abstract-results-mismatch.md",
+    "prompt": "Use $fdu-final-paper-skill to revise the Chinese abstract and compare it with the English abstract in the fixture. Keep the claims bounded to supplied evidence.",
+    "expected_checks": ["soften novelty claim", "no external baseline", "safer English claims", "local-scope limitation", "no invented metrics"],
+    "behavior_checks": ["declare sources", "list unknowns", "bound claims to evidence", "avoid unverified official conclusions", "avoid fabricated data"],
+    "forbidden_patterns": ["p\\s*<\\s*0\\.05", "sample size\\s*=\\s*\\d+", "样本量\\s*[为=]\\s*\\d+", "significantly better than existing methods"]
+  },
+  {
+    "id": "defense-risk-long",
+    "task_type": "defense_audit",
+    "fixture_path": "fixtures/defense-risk-long.md",
+    "prompt": "Use $fdu-final-paper-skill to produce a strict defense-readiness risk audit from the fixture. Prioritize fixes for unsupported claims and missing evidence.",
+    "expected_checks": ["strict defense risk audit", "likely committee questions", "unsupported superiority claim", "POI authorization unknown", "two-week priority plan"],
+    "behavior_checks": ["declare sources", "list unknowns", "bound claims to evidence", "avoid unverified official conclusions", "avoid fabricated data"],
+    "forbidden_patterns": ["defense-ready with no major risks", "all claims are supported", "POI data authorization is complete", "national policy value is proven"]
   }
 ]

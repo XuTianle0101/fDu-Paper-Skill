@@ -8,6 +8,7 @@ This project follows version tags such as `v0.1.0`, `v0.1.1`, and `v0.1.2`. For 
 
 ### Added
 
+- Added behavior-oriented eval support with long input fixtures, per-prompt behavior checks, and forbidden-pattern checks for fabricated data or unverified official conclusions.
 - Added `references/thesis-architecture.md` and `references/section-writing.md` so chapter-planning and section-writing guidance can load only when needed.
 - Added `skills/fdu-final-paper-skill/VERSION` as the canonical skill version source and a version consistency check for README badges, README version text, and CHANGELOG release headings.
 - Added README trust and privacy boundaries clarifying that the project is not an official Fudan review service and that sensitive or confidential thesis materials should not be uploaded to untrusted systems.

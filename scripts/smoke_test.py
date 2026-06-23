@@ -86,8 +86,8 @@ def main() -> int:
 
     prompts_path = ROOT / "evals" / "prompts.json"
     prompts = json.loads(prompts_path.read_text(encoding="utf-8"))
-    if len(prompts) != 10:
-        raise SystemExit(f"Expected exactly 10 eval prompts, found {len(prompts)}.")
+    if len(prompts) != 13:
+        raise SystemExit(f"Expected exactly 13 eval prompts, found {len(prompts)}.")
     required_prompt_keys = {"id", "task_type", "prompt", "expected_checks"}
     for item in prompts:
         missing = required_prompt_keys - set(item)
